@@ -1,0 +1,33 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "c701a3bf-012f-45ac-93e5-1d9d12af8b01",
+  "alias": "SvgPublishWebPart",
+  "componentType": "WebPart",
+  "version": "*",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportsFullBleed": true,
+  "supportedHosts": [
+    "SharePointWebPart",
+    "SharePointFullPage",
+    "TeamsTab"
+  ],
+  "preconfiguredEntries": [
+    {
+      "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+      "group": {
+        "default": "Other"
+      },
+      "title": {
+        "default": "SvgPublish"
+      },
+      "description": {
+        "default": "The web part is a specialized widget to display an exported SvgPublish diagram."
+      },
+      "fullPageAppIconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
+      "iconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
+      "properties": {
+      }
+    }
+  ]
+}

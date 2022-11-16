@@ -4,7 +4,7 @@ import { IWebPartProps } from './WebPart';
 import { Placeholder } from '../min-sp-controls-react/controls/placeholder';
 import { MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
-import { PanZoom } from './PanZoom';
+import { VpSvgTools, VpSelection } from 'svgpublish';
 
 interface ITopFrameProps extends IWebPartProps {
   context: WebPartContext;
@@ -50,7 +50,8 @@ export function TopFrame(props: ITopFrameProps) {
 
       root.innerHTML = doc.documentElement.outerHTML;
 
-      const tools = new PanZoom(root, { viewBox });
+      const vpSvgTools = new VpSvgTools(root, { viewBox });
+      const vpSelection = new VpSelection(vpSvgTools.svg, vpSvgTools.diagram);
 
       return () => {
         root.innerHTML = '';
@@ -64,10 +65,13 @@ export function TopFrame(props: ITopFrameProps) {
   const [loadError, setLoadError] = React.useState('');
 
   React.useEffect(() => {
-    // props.context.statusRenderer.displayLoadingIndicator(ref.current, 'diagram');
-    sp.web.getFileByUrl(props.url).getText().then(text => {
-      setContent(text);
-    });
+    if (props.url) {
+      sp.web.getFileByUrl(props.url).getText().then(text => {
+        setContent(text);
+      }, err => {
+        setLoadError(`${err}`);
+      });
+    }
   }, [props.url]);
 
   const rootStyle = {

@@ -45,13 +45,17 @@ export function TopFrame(props: ITopFrameProps) {
 
       const viewBox = doc.documentElement.getAttribute('viewBox');
       doc.documentElement.removeAttribute('viewBox');
-      doc.documentElement.removeAttribute('width');
-      doc.documentElement.removeAttribute('height');
+      doc.documentElement.setAttribute('width', '100%');
+      doc.documentElement.setAttribute('height', '100%');
 
       root.innerHTML = doc.documentElement.outerHTML;
+      const svg = root.querySelector('svg');
 
-      const vpSvgTools = new VpSvgTools(root, { viewBox });
-      const vpSelection = new VpSelection(vpSvgTools.svg, vpSvgTools.diagram);
+      const diagramNode = doc.documentElement.getElementsByTagNameNS("http://vispublish", "SvgPublishData")[0];
+      const diagram = diagramNode && JSON.parse(diagramNode.innerHTML);
+
+      const vpSvgTools = new VpSvgTools(root, svg, diagram);
+      const vpSelection = new VpSelection(svg, diagram);
 
       return () => {
         root.innerHTML = '';

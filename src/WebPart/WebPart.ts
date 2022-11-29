@@ -85,14 +85,12 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
 
     const isPropertyPaneOpen = this.context.propertyPane.isPropertyPaneOpen();
 
-    const properties = {
-      ...this.properties,
-      width: this.properties.width || '100%',
-      height: this.properties.height || '50vh'
-    };
-
     const element = React.createElement(TopFrame, {
-      ...properties,
+      webpart: {
+        ...this.properties,
+        width: this.properties.width || '100%',
+        height: this.properties.height || '50vh'
+      },
       isPropertyPaneOpen,
       onConfigure: () => this.context.propertyPane.open(),
       isReadOnly: this.displayMode === DisplayMode.Read,

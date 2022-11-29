@@ -53,7 +53,7 @@ build.mergeConfig({
   showToast: false
 });
 
-gulp.watch('./node_modules/svgpublish/dist', event => {
+gulp.watch('./node_modules/svgpublish/dist/**/*', event => {
 
   // copy empty index.ts onto itself to launch build procees
   gulp.src('./src/index.ts')

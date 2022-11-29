@@ -4,10 +4,11 @@ import { IWebPartProps } from './WebPart';
 import { Placeholder } from '../min-sp-controls-react/controls/placeholder';
 import { MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
-import { SvgPublish, VpSelection } from 'svgpublish';
+import { SvgPublish, VpSelection, VpLinks, LinkClickedEvent } from 'svgpublish';
 
-interface ITopFrameProps extends IWebPartProps {
+interface ITopFrameProps {
   context: WebPartContext;
+  webpart: IWebPartProps;
   isPropertyPaneOpen: boolean;
   isReadOnly: boolean;
   isTeams: boolean;
@@ -17,6 +18,7 @@ interface ITopFrameProps extends IWebPartProps {
 export function TopFrame(props: ITopFrameProps) {
 
   const ref = React.useRef(null);
+  const [url, setUrl] = React.useState<string>(props.webpart.url);
   const [content, setContent] = React.useState(null);
 
   const enablePropsChanged = React.useRef(false);
@@ -29,10 +31,10 @@ export function TopFrame(props: ITopFrameProps) {
       return () => clearTimeout(timer);
     }
   }, [
-    props.height, props.width,
-    props.zoom, props.startPage,
-    props.hideToolbars, props.hideBorders, props.hideDiagramBoundary,
-    props.disablePan, props.disableZoom, props.disablePanZoomWindow, props.disableHyperlinks
+    props.webpart.height, props.webpart.width,
+    props.webpart.zoom, props.webpart.startPage,
+    props.webpart.hideToolbars, props.webpart.hideBorders, props.webpart.hideDiagramBoundary,
+    props.webpart.disablePan, props.webpart.disableZoom, props.webpart.disablePanZoomWindow, props.webpart.disableHyperlinks
   ]);
 
   React.useEffect(() => {
@@ -56,6 +58,12 @@ export function TopFrame(props: ITopFrameProps) {
 
       const component = new SvgPublish(root, svg, diagram);
       const vpSelection = new VpSelection(component);
+      const vpLinks = new VpLinks(component);
+
+      component.diagram.events.addEventListener('linkClicked', (evt: LinkClickedEvent) => {
+        setUrl(evt.args.href);
+        return true;
+      })
 
       return () => {
         root.innerHTML = '';
@@ -69,22 +77,22 @@ export function TopFrame(props: ITopFrameProps) {
   const [loadError, setLoadError] = React.useState('');
 
   React.useEffect(() => {
-    if (props.url) {
-      sp.web.getFileByUrl(props.url).getText().then(text => {
+    if (url) {
+      sp.web.getFileByUrl(url).getText().then(text => {
         setContent(text);
       }, err => {
         setLoadError(`${err}`);
       });
     }
-  }, [props.url]);
+  }, [url]);
 
   const rootStyle = {
-    height: props.height,
-    width: props.width,
+    height: props.webpart.height,
+    width: props.webpart.width,
     overflow: 'hidden'
   };
 
-  const showPlaceholder = !props.url || loadError;
+  const showPlaceholder = !url || loadError;
 
   const placeholderIconName = loadError
     ? "Error"

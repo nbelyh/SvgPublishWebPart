@@ -4,7 +4,7 @@ import { IWebPartProps } from './WebPart';
 import { Placeholder } from '../min-sp-controls-react/controls/placeholder';
 import { MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
-import { VpSvgTools, VpSelection } from 'svgpublish';
+import { SvgPublish, VpSelection } from 'svgpublish';
 
 interface ITopFrameProps extends IWebPartProps {
   context: WebPartContext;
@@ -54,8 +54,8 @@ export function TopFrame(props: ITopFrameProps) {
       const diagramNode = doc.documentElement.getElementsByTagNameNS("http://vispublish", "SvgPublishData")[0];
       const diagram = diagramNode && JSON.parse(diagramNode.innerHTML);
 
-      const vpSvgTools = new VpSvgTools(root, svg, diagram);
-      const vpSelection = new VpSelection(svg, diagram);
+      const component = new SvgPublish(root, svg, diagram);
+      const vpSelection = new VpSelection(component);
 
       return () => {
         root.innerHTML = '';

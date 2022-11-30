@@ -2,9 +2,10 @@ import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from './WebPart';
 import { Placeholder } from '../min-sp-controls-react/controls/placeholder';
-import { hiddenContentStyle, MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
+import { MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
 import { SvgPublish, LinkClickedEvent } from 'svgpublish';
+import { Errors } from './Errors';
 
 interface ITopFrameProps {
   context: WebPartContext;
@@ -64,7 +65,8 @@ export function TopFrame(props: ITopFrameProps) {
         svg,
         container,
         diagram,
-        events: new EventTarget
+        events: new EventTarget,
+        baseUrl: url.substring(0, url.lastIndexOf('/') + 1)
       };
 
       const component = new SvgPublish(context, viewBox);
@@ -88,9 +90,12 @@ export function TopFrame(props: ITopFrameProps) {
   React.useEffect(() => {
     if (url) {
       sp.web.getFileByUrl(url).getText().then(content => {
+        setLoadError('');
         setContent(content);
       }, err => {
-        setLoadError(`${err}`);
+        Errors.formatErrorMessage(err).then(message => {
+          setLoadError(`Unable to get file ${url}: ${message}`)
+        });
       });
     }
   }, [url]);
@@ -126,6 +131,7 @@ export function TopFrame(props: ITopFrameProps) {
 
   return (
     <ThemeProvider style={rootStyle}>
+      {loadError && <MessageBar messageBarType={MessageBarType.warning}>{loadError}</MessageBar>}
       {showPlaceholder && <Placeholder
         iconName={placeholderIconName}
         iconText={placeholderIconText}

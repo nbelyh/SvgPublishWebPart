@@ -2,9 +2,9 @@ import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from './WebPart';
 import { Placeholder } from '../min-sp-controls-react/controls/placeholder';
-import { MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
+import { hiddenContentStyle, MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
-import { SvgPublish, VpSelection, VpLinks, LinkClickedEvent } from 'svgpublish';
+import { SvgPublish, LinkClickedEvent } from 'svgpublish';
 
 interface ITopFrameProps {
   context: WebPartContext;
@@ -26,6 +26,10 @@ export function TopFrame(props: ITopFrameProps) {
   const [propsChanged, setPropsChanged] = React.useState(0);
 
   React.useEffect(() => {
+    setUrl(props.webpart.url);
+  }, [props.webpart.url])
+
+  React.useEffect(() => {
     if (enablePropsChanged.current) {
       const timer = setTimeout(() => setPropsChanged(propsChanged + 1), 1000);
       return () => clearTimeout(timer);
@@ -40,33 +44,38 @@ export function TopFrame(props: ITopFrameProps) {
   React.useEffect(() => {
 
     if (content) {
-      const root: HTMLElement = ref.current;
+      const container: HTMLElement = ref.current;
 
       const parser = new DOMParser();
       const doc = parser.parseFromString(content, 'text/xml');
 
-      const viewBox = doc.documentElement.getAttribute('viewBox');
+      const diagramNode = doc.documentElement.getElementsByTagNameNS("http://vispublish", "SvgPublishData")[0];
+      const diagram = diagramNode && JSON.parse(diagramNode.innerHTML);
+
+      const viewBox = diagram.viewBox || doc.documentElement.getAttribute('viewBox');
       doc.documentElement.removeAttribute('viewBox');
       doc.documentElement.setAttribute('width', '100%');
       doc.documentElement.setAttribute('height', '100%');
 
-      root.innerHTML = doc.documentElement.outerHTML;
-      const svg = root.querySelector('svg');
+      container.innerHTML = doc.documentElement.outerHTML;
+      const svg = container.querySelector('svg');
 
-      const diagramNode = doc.documentElement.getElementsByTagNameNS("http://vispublish", "SvgPublishData")[0];
-      const diagram = diagramNode && JSON.parse(diagramNode.innerHTML);
+      const context = {
+        svg,
+        container,
+        diagram,
+        events: new EventTarget
+      };
 
-      const component = new SvgPublish(root, svg, diagram);
-      const vpSelection = new VpSelection(component);
-      const vpLinks = new VpLinks(component);
+      const component = new SvgPublish(context, viewBox);
 
-      component.diagram.events.addEventListener('linkClicked', (evt: LinkClickedEvent) => {
+      context.events.addEventListener('linkClicked', (evt: LinkClickedEvent) => {
+        evt.preventDefault();
         setUrl(evt.args.href);
-        return true;
       })
 
       return () => {
-        root.innerHTML = '';
+        container.innerHTML = '';
       };
     } else {
       enablePropsChanged.current = true;
@@ -78,8 +87,8 @@ export function TopFrame(props: ITopFrameProps) {
 
   React.useEffect(() => {
     if (url) {
-      sp.web.getFileByUrl(url).getText().then(text => {
-        setContent(text);
+      sp.web.getFileByUrl(url).getText().then(content => {
+        setContent(content);
       }, err => {
         setLoadError(`${err}`);
       });
@@ -99,8 +108,8 @@ export function TopFrame(props: ITopFrameProps) {
     : "Edit";
 
   const placeholderIconText = loadError
-    ? "Unable to show this diagram"
-    : "The diagram not selected";
+    ? "Unable to show the diagram"
+    : "The diagram is not selected";
 
   const placeholderDescription = props.isPropertyPaneOpen
     ? `Please click 'Browse...' Button on configuration panel to select the diagram.`
@@ -108,21 +117,25 @@ export function TopFrame(props: ITopFrameProps) {
       ? (props.isTeams
         ? `Please click 'Settings' menu on the Tab to reconfigure this web part.`
         : `Please click 'Edit' to start page editing to reconfigure this web part.`
-        )
+      )
       : `Click 'Configure' button to reconfigure this web part.`;
 
+  const onConfigure = () => {
+    props.onConfigure();
+  }
+
   return (
-    <ThemeProvider style={rootStyle} ref={ref}>
-      {loadError && <MessageBar messageBarType={MessageBarType.error}>{loadError}</MessageBar>}
+    <ThemeProvider style={rootStyle}>
       {showPlaceholder && <Placeholder
         iconName={placeholderIconName}
         iconText={placeholderIconText}
         description={placeholderDescription}
         buttonLabel={"Configure"}
-        onConfigure={() => props.onConfigure()}
+        onConfigure={onConfigure}
         hideButton={props.isReadOnly}
         disableButton={props.isPropertyPaneOpen}
       />}
+      <div style={{ width: '100%', height: '100%', display: showPlaceholder ? 'none' : 'block' }} ref={ref}></div>
     </ThemeProvider>
   );
 }

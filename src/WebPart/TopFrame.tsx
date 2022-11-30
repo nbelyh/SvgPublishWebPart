@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { IWebPartProps } from './WebPart';
-import { Placeholder } from '../min-sp-controls-react/controls/placeholder';
+import { IWebPartProps } from "./IWebPartProps";
+import { Placeholder } from 'min-sp-controls-react/controls/placeholder';
 import { MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
 import { SvgPublish, LinkClickedEvent } from 'svgpublish';
 import { Errors } from './Errors';
 
-interface ITopFrameProps {
+export function TopFrame(props: {
   context: WebPartContext;
   webpart: IWebPartProps;
   isPropertyPaneOpen: boolean;
   isReadOnly: boolean;
   isTeams: boolean;
   onConfigure: () => void;
-}
-
-export function TopFrame(props: ITopFrameProps) {
+}) {
 
   const ref = React.useRef(null);
   const [url, setUrl] = React.useState<string>(props.webpart.url);
@@ -39,7 +37,7 @@ export function TopFrame(props: ITopFrameProps) {
     props.webpart.height, props.webpart.width,
     props.webpart.zoom, props.webpart.startPage,
     props.webpart.hideToolbars, props.webpart.hideBorders, props.webpart.hideDiagramBoundary,
-    props.webpart.disablePan, props.webpart.disableZoom, props.webpart.disablePanZoomWindow, props.webpart.disableHyperlinks
+    props.webpart.disablePan, props.webpart.disableZoom, props.webpart.disableHyperlinks
   ]);
 
   React.useEffect(() => {

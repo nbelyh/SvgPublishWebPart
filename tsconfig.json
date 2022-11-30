@@ -24,7 +24,8 @@
     "lib": [
       "dom",
       "es2015"
-    ]
+    ],
+    "baseUrl": "./src"
   },
   "include": [
     "src/**/*.ts",

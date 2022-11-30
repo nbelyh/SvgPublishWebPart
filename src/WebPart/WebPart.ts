@@ -161,16 +161,6 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
                   context: this.context,
                   getDefaultFolder: () => this.getDefaultFolder(),
                 }),
-
-                PropertyPaneTextField('startPage', {
-                  label: strings.FieldStartPage,
-                  description: "Page (name) to activate on load"
-                }),
-
-                PropertyPaneTextField('zoom', {
-                  label: strings.FieldZoom,
-                  description: "Zoom level (percents) to set on load"
-                }),
               ]
             },
             {

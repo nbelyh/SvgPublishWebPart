@@ -36,8 +36,7 @@ export function TopFrame(props: {
   }, [
     props.webpart.height, props.webpart.width,
     props.webpart.zoom, props.webpart.startPage,
-    props.webpart.hideToolbars, props.webpart.hideBorders, props.webpart.hideDiagramBoundary,
-    props.webpart.disablePan, props.webpart.disableZoom, props.webpart.disableHyperlinks
+    props.webpart.enablePan, props.webpart.enableZoom, props.webpart.enableHyperlinks
   ]);
 
   const contextRef = React.useRef(null);

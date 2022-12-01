@@ -20,19 +20,14 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
 
   public render(): void {
 
-    const isPropertyPaneOpen = this.context.propertyPane.isPropertyPaneOpen();
-
     const element = React.createElement(TopFrame, {
       webpart: {
         ...this.properties,
         width: this.properties.width || '100%',
         height: this.properties.height || '50vh'
       },
-      isPropertyPaneOpen,
-      onConfigure: () => this.context.propertyPane.open(),
       isReadOnly: this.displayMode === DisplayMode.Read,
       context: this.context,
-      isTeams: !!this.context.sdks?.microsoftTeams?.context
     });
 
     ReactDom.render(element, this.domElement);

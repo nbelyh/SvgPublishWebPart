@@ -94,12 +94,6 @@ export function TopFrame(props: {
     }
   }, [url]);
 
-  const rootStyle = {
-    height: props.webpart.height,
-    width: props.webpart.width,
-    overflow: 'hidden'
-  };
-
   const showPlaceholder = !url || loadError;
 
   const placeholderIconName = loadError
@@ -123,6 +117,18 @@ export function TopFrame(props: {
     props.onConfigure();
   }
 
+  const rootStyle: React.CSSProperties = {
+    height: props.webpart.height,
+    width: props.webpart.width,
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column'
+  };
+
+  const divStyle = {
+    flexGrow: 1
+  };
+
   return (
     <ThemeProvider style={rootStyle}>
       {loadError && <MessageBar messageBarType={MessageBarType.warning}>{loadError}</MessageBar>}
@@ -135,7 +141,7 @@ export function TopFrame(props: {
         hideButton={props.isReadOnly}
         disableButton={props.isPropertyPaneOpen}
       />}
-      <div style={{ width: '100%', height: '100%', display: showPlaceholder ? 'none' : 'block' }} ref={ref}></div>
+      <div style={divStyle} ref={ref} />
     </ThemeProvider>
   );
 }

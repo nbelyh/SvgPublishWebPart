@@ -56,7 +56,7 @@ export function TopFrame(props: {
         const link = evt.args.link;
         const pageId = link.PageId;
         if (pageId >= 0) {
-          const diagram = evt.args.diagram;
+          const diagram = evt.args.context.diagram;
           const page = diagram.pages.find(p => p.Id === pageId);
           const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + page.FileName;
           setUrl(pageUrl);

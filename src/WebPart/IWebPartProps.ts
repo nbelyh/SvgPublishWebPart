@@ -4,13 +4,10 @@ export interface IWebPartProps {
   startPage: string;
   width: string;
   height: string;
-  hideToolbars: boolean;
-  hideBorders: boolean;
 
-  hideDiagramBoundary: boolean;
-  disableHyperlinks: boolean;
-  disablePan: boolean;
-  disableZoom: boolean;
+  enableHyperlinks: boolean;
+  enablePan: boolean;
+  enableZoom: boolean;
 
   zoom: number;
 }

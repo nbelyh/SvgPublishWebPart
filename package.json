@@ -18,13 +18,12 @@
     "@microsoft/sp-core-library": "1.15.2",
     "@microsoft/sp-loader": "^1.15.2",
     "@microsoft/sp-lodash-subset": "1.15.2",
-    "@microsoft/sp-office-ui-fabric-core": "1.15.2",
     "@microsoft/sp-property-pane": "1.15.2",
     "@microsoft/sp-webpart-base": "1.15.2",
     "@pnp/sp": "^2.14.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "svgpublish": "^0.0.4"
+    "svgpublish": "^0.0.5"
   },
   "devDependencies": {
     "@microsoft/rush-stack-compiler-4.5": "^0.2.2",
@@ -42,7 +41,6 @@
     "eslint": "8.23.0",
     "eslint-plugin-react": "^7.31.10",
     "gulp": "^4.0.2",
-    "gulp-eslint": "6.0.0",
-    "typescript": "~4.5.5"
+    "gulp-eslint": "6.0.0"
   }
 }

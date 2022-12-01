@@ -4,7 +4,7 @@ import { IWebPartProps } from "./IWebPartProps";
 import { Placeholder } from 'min-sp-controls-react/controls/placeholder';
 import { MessageBar, MessageBarType, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
-import { SvgPublish, LinkClickedEvent } from 'svgpublish';
+import { LinkClickedEvent, SvgPublishContext } from 'svgpublish';
 import { Errors } from './Errors';
 
 export function TopFrame(props: {
@@ -40,42 +40,38 @@ export function TopFrame(props: {
     props.webpart.disablePan, props.webpart.disableZoom, props.webpart.disableHyperlinks
   ]);
 
+  const contextRef = React.useRef(null);
+
   React.useEffect(() => {
 
     if (content) {
       const container: HTMLElement = ref.current;
 
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(content, 'text/xml');
+      contextRef.current = SvgPublishContext.create(container, content);
 
-      const diagramNode = doc.documentElement.getElementsByTagNameNS("http://vispublish", "SvgPublishData")[0];
-      const diagram = diagramNode && JSON.parse(diagramNode.innerHTML);
+      contextRef.current.events.addEventListener('linkClicked', (evt: LinkClickedEvent) => {
 
-      const viewBox = diagram.viewBox || doc.documentElement.getAttribute('viewBox');
-      doc.documentElement.removeAttribute('viewBox');
-      doc.documentElement.setAttribute('width', '100%');
-      doc.documentElement.setAttribute('height', '100%');
-
-      container.innerHTML = doc.documentElement.outerHTML;
-      const svg = container.querySelector('svg');
-
-      const context = {
-        svg,
-        container,
-        diagram,
-        events: new EventTarget,
-        baseUrl: url.substring(0, url.lastIndexOf('/') + 1)
-      };
-
-      const component = new SvgPublish(context, viewBox);
-
-      context.events.addEventListener('linkClicked', (evt: LinkClickedEvent) => {
         evt.preventDefault();
-        setUrl(evt.args.href);
+
+        const link = evt.args.link;
+        const pageId = link.PageId;
+        if (pageId >= 0) {
+          const diagram = evt.args.diagram;
+          const page = diagram.pages.find(p => p.Id === pageId);
+          const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + page.FileName;
+          setUrl(pageUrl);
+        } else {
+          if (link.Address) {
+            window.open(link.Address, '_blank');
+          }
+        }
       })
 
       return () => {
-        container.innerHTML = '';
+        if (contextRef.current) {
+          SvgPublishContext.destroy(contextRef.current);
+          contextRef.current = null;
+        }
       };
     } else {
       enablePropsChanged.current = true;

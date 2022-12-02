@@ -27,6 +27,9 @@
       "fullPageAppIconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
       "iconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
       "properties": {
+        "enableLinks": true,
+        "enablePan": true,
+        "enableZoom": true
       }
     }
   ]

@@ -20,12 +20,17 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
 
   public render(): void {
 
+    const webpart = {
+      ...this.properties,
+      width: this.properties.width || '100%',
+      height: this.properties.height || '50vh',
+      enablePan: this.properties.enablePan ?? true,
+      enableZoom: this.properties.enableZoom ?? true,
+      enableLinks: this.properties.enableLinks ?? true,
+    };
+
     const element = React.createElement(TopFrame, {
-      webpart: {
-        ...this.properties,
-        width: this.properties.width || '100%',
-        height: this.properties.height || '50vh'
-      },
+      webpart,
       isReadOnly: this.displayMode === DisplayMode.Read,
       context: this.context,
     });

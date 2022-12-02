@@ -5,7 +5,7 @@ export interface IWebPartProps {
   width: string;
   height: string;
 
-  enableHyperlinks: boolean;
+  enableLinks: boolean;
   enablePan: boolean;
   enableZoom: boolean;
 

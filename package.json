@@ -23,7 +23,7 @@
     "@pnp/sp": "^2.14.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "svgpublish": "^0.0.7"
+    "svgpublish": "^0.0.8"
   },
   "devDependencies": {
     "@microsoft/rush-stack-compiler-4.5": "^0.2.2",

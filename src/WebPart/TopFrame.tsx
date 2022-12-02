@@ -6,6 +6,7 @@ import { sp } from '@pnp/sp';
 import { ISvgPublishContext, LinkClickedEvent, SvgPublishContext } from 'svgpublish';
 import { Errors } from './Errors';
 import { ErrorPlaceholder } from './components/ErrorPlaceholder';
+import { IDiagramInfo } from 'svgpublish/dist/interfaces/IDiagramInfo';
 
 export function TopFrame(props: {
   context: WebPartContext;
@@ -25,7 +26,14 @@ export function TopFrame(props: {
     if (!url) return;
 
     sp.web.getFileByUrl(url).getText().then(async (content) => {
-      contextRef.current = SvgPublishContext.create(ref.current, content);
+
+      const init: Partial<IDiagramInfo> = {
+        enableZoom: props.webpart.enableZoom,
+        enablePan: props.webpart.enablePan,
+        enableLinks: props.webpart.enableLinks
+      };
+
+      contextRef.current = SvgPublishContext.create(ref.current, content, init);
       contextRef.current.events.addEventListener('linkClicked', onLinkClicked);
       setError('');
     }, err => {
@@ -44,12 +52,11 @@ export function TopFrame(props: {
 
   }, [url]);
 
-  React.useEffect(() => {
-    if (contextRef.current) {
-      const view = contextRef.current.services.view as any;
-      view.reset();
-    }
-  }, [props.webpart.width, props.webpart.height])
+  const view = contextRef.current?.services?.view as any;
+
+  React.useEffect(() => { if (view) view.reset() }, [props.webpart.width, props.webpart.height]);
+  React.useEffect(() => { if (view) view.enablePan = props.webpart.enablePan }, [props.webpart.enablePan]);
+  React.useEffect(() => { if (view) view.enableZoom = props.webpart.enableZoom }, [props.webpart.enableZoom]);
 
   const onLinkClicked = (evt: LinkClickedEvent) => {
 

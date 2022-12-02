@@ -1,6 +1,6 @@
 import * as strings from 'WebPartStrings';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { IPropertyPaneConfiguration } from '@microsoft/sp-property-pane';
+import { IPropertyPaneConfiguration, PropertyPaneToggle } from '@microsoft/sp-property-pane';
 
 import { PropertyPaneVersionField } from './PropertyPaneVersionField';
 import { PropertyPaneUrlField } from './PropertyPaneUrlField';
@@ -44,6 +44,21 @@ export class PropertyPaneConfiguration {
                   value: properties.height,
                   screenUnits: 'h',
                   getDefaultValue: () => Defaults.getDefaultHeight(context)
+                }),
+              ]
+            },
+            {
+              groupName: "Drawing Interactivity",
+              isCollapsed: true,
+              groupFields: [
+                PropertyPaneToggle('enableLinks', {
+                  label: "Enable Links",
+                }),
+                PropertyPaneToggle('enablePan', {
+                  label: "Enable Pan",
+                }),
+                PropertyPaneToggle('enableZoom', {
+                  label: "Enable Zoom",
                 }),
               ]
             },

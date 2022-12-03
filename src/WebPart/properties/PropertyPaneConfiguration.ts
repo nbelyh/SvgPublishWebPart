@@ -51,6 +51,9 @@ export class PropertyPaneConfiguration {
               groupName: "Drawing Interactivity",
               isCollapsed: true,
               groupFields: [
+                PropertyPaneToggle('enableBreadcrumb', {
+                  label: "Enable Breadcrumb",
+                }),
                 PropertyPaneToggle('enableLinks', {
                   label: "Enable Links",
                 }),

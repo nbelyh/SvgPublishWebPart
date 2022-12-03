@@ -5,6 +5,7 @@ import * as React from 'react'
 export const ErrorPlaceholder = (props: {
   context: WebPartContext;
   isReadOnly: boolean;
+  isRoot: boolean;
   error: string;
 }) => {
 
@@ -22,11 +23,11 @@ export const ErrorPlaceholder = (props: {
   const isTeams = !!props.context.sdks?.microsoftTeams?.context;
 
   const placeholderDescription = isPropertyPaneOpen
-    ? `Please click 'Browse...' Button on configuration panel to select the diagram.`
+    ? `Click 'Browse...' Button on configuration panel to select the diagram.`
     : props.isReadOnly
       ? (isTeams
-        ? `Please click 'Settings' menu on the Tab to reconfigure this web part.`
-        : `Please click 'Edit' to start page editing to reconfigure this web part.`
+        ? `Click 'Settings' menu on the Tab to reconfigure this web part.`
+        : `Click 'Edit' to start page editing to reconfigure this web part.`
       )
       : `Click 'Configure' button to reconfigure this web part.`;
 
@@ -34,7 +35,7 @@ export const ErrorPlaceholder = (props: {
     <Placeholder
       iconName={placeholderIconName}
       iconText={placeholderIconText}
-      description={placeholderDescription}
+      description={props.error + ' ' + placeholderDescription}
       buttonLabel={"Configure"}
       onConfigure={onConfigure}
       hideButton={props.isReadOnly}

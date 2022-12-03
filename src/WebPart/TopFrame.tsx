@@ -3,7 +3,7 @@ import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from "./IWebPartProps";
 import { ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
-import { ISvgPublishContext, LinkClickedEvent, SvgPublishContext } from 'svgpublish';
+import { LinkClickedEvent, SvgPublishContext } from 'svgpublish';
 import { Errors } from './Errors';
 import { ErrorPlaceholder } from './components/ErrorPlaceholder';
 import { IDiagramInfo } from 'svgpublish/dist/interfaces/IDiagramInfo';
@@ -17,7 +17,7 @@ export function TopFrame(props: {
   const ref = React.useRef(null);
   const [url, setUrl] = React.useState<string>(props.webpart.url);
 
-  const contextRef = React.useRef<ISvgPublishContext>(null);
+  const contextRef = React.useRef<SvgPublishContext>(null);
 
   React.useEffect(() => setUrl(props.webpart.url), [props.webpart.url])
 
@@ -33,7 +33,7 @@ export function TopFrame(props: {
         enableLinks: props.webpart.enableLinks
       };
 
-      contextRef.current = SvgPublishContext.create(ref.current, content, init);
+      contextRef.current = new SvgPublishContext(ref.current, content, init);
       contextRef.current.events.addEventListener('linkClicked', onLinkClicked);
       setError('');
     }, err => {
@@ -45,18 +45,38 @@ export function TopFrame(props: {
     return () => {
       if (contextRef.current) {
         contextRef.current.events.removeEventListener('linkClicked', onLinkClicked);
-        SvgPublishContext.destroy(contextRef.current);
+        contextRef.current.destroy();
         contextRef.current = null;
       }
     };
 
   }, [url]);
 
-  const view = contextRef.current?.services?.view as any;
+  const view = contextRef.current?.services?.view;
 
-  React.useEffect(() => { if (view) view.reset() }, [props.webpart.width, props.webpart.height]);
-  React.useEffect(() => { if (view) view.enablePan = props.webpart.enablePan }, [props.webpart.enablePan]);
-  React.useEffect(() => { if (view) view.enableZoom = props.webpart.enableZoom }, [props.webpart.enableZoom]);
+  React.useEffect(() => {
+    if (view) {
+      view.reset();
+    }
+  }, [props.webpart.width, props.webpart.height]);
+
+  React.useEffect(() => {
+    if (view) {
+      view.enablePan = props.webpart.enablePan;
+    }
+  }, [props.webpart.enablePan]);
+
+  React.useEffect(() => {
+    if (view) {
+      view.enableZoom = props.webpart.enableZoom
+    }
+  }, [props.webpart.enableZoom]);
+
+  React.useEffect(() => {
+    if (contextRef.current) {
+      contextRef.current.enableService('links', props.webpart.enableLinks);
+    }
+  }, [props.webpart.enableLinks]);
 
   const onLinkClicked = (evt: LinkClickedEvent) => {
 

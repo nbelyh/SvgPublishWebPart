@@ -27,6 +27,7 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
       enablePan: this.properties.enablePan ?? true,
       enableZoom: this.properties.enableZoom ?? true,
       enableLinks: this.properties.enableLinks ?? true,
+      enableBreadcrumb: this.properties.enableBreadcrumb ?? true,
     };
 
     const element = React.createElement(TopFrame, {

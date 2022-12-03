@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from "./IWebPartProps";
-import { ThemeProvider } from '@fluentui/react';
+import { Breadcrumb, IBreadcrumbItem, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
 import { LinkClickedEvent, SvgPublishContext } from 'svgpublish';
 import { Errors } from './Errors';
@@ -19,7 +19,18 @@ export function TopFrame(props: {
 
   const contextRef = React.useRef<SvgPublishContext>(null);
 
-  React.useEffect(() => setUrl(props.webpart.url), [props.webpart.url])
+  const onBreadcrumbClick = (ev?: React.MouseEvent<HTMLElement>, item?: IBreadcrumbItem) => {
+    const foundIndex = breadcrumb.current.findIndex(x => x.key === item.key);
+    breadcrumb.current.splice(foundIndex+1);
+    setUrl(item.key);
+  };
+
+  const breadcrumbDefault = [{ key: props.webpart.url, text: "Home", onClick: onBreadcrumbClick }];
+
+  React.useEffect(() => {
+    breadcrumb.current = breadcrumbDefault;
+    setUrl(props.webpart.url);
+  }, [props.webpart.url])
 
   React.useEffect(() => {
 
@@ -38,8 +49,8 @@ export function TopFrame(props: {
       setError('');
     }, err => {
       Errors.formatErrorMessage(err)
-        .then(message => setError(`Unable to get file ${url}: ${message}`))
-        .catch(err => setError(`Unable to get file ${url}: ${err}`))
+        .then(message => setError(`Unable to get file ${decodeURI(url)}. ${message}`))
+        .catch(err => setError(`Unable to get file ${decodeURI(url)} ${err}`))
     });
 
     return () => {
@@ -52,46 +63,36 @@ export function TopFrame(props: {
 
   }, [url]);
 
-  const view = contextRef.current?.services?.view;
+  React.useEffect(() => contextRef.current?.services?.view?.reset(), [props.webpart.width, props.webpart.height]);
+  React.useEffect(() => contextRef.current?.services?.view?.setPanEnabled(props.webpart.enablePan), [props.webpart.enablePan]);
+  React.useEffect(() => contextRef.current?.services?.view?.setZoomEnabled(props.webpart.enableZoom), [props.webpart.enableZoom]);
+  React.useEffect(() => contextRef.current?.enableService('links', props.webpart.enableLinks), [props.webpart.enableLinks]);
 
-  React.useEffect(() => {
-    if (view) {
-      view.reset();
-    }
-  }, [props.webpart.width, props.webpart.height]);
-
-  React.useEffect(() => {
-    if (view) {
-      view.enablePan = props.webpart.enablePan;
-    }
-  }, [props.webpart.enablePan]);
-
-  React.useEffect(() => {
-    if (view) {
-      view.enableZoom = props.webpart.enableZoom
-    }
-  }, [props.webpart.enableZoom]);
-
-  React.useEffect(() => {
-    if (contextRef.current) {
-      contextRef.current.enableService('links', props.webpart.enableLinks);
-    }
-  }, [props.webpart.enableLinks]);
+  const breadcrumb = React.useRef<IBreadcrumbItem[]>(breadcrumbDefault);
 
   const onLinkClicked = (evt: LinkClickedEvent) => {
 
     evt.preventDefault();
 
-    const link = evt.args.link;
+    const args = evt.args;
+    const link = args.link;
+
     const pageId = link.PageId;
     if (pageId >= 0) {
       const diagram = evt.args.context.diagram;
       const page = diagram.pages.find(p => p.Id === pageId);
       const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + page.FileName;
+      breadcrumb.current.push({ key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick })
       setUrl(pageUrl);
     } else {
       if (link.Address) {
-        window.open(link.Address, '_blank');
+        if (!link.Address.startsWith('https:') && link.Address.endsWith('.svg')) { // another local diagram
+          const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + link.Address;
+          breadcrumb.current.push({ key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick })
+          setUrl(pageUrl);
+        } else {
+          window.open(link.Address, '_blank');
+        }
       }
     }
   }
@@ -114,7 +115,8 @@ export function TopFrame(props: {
 
   return (
     <ThemeProvider style={rootStyle}>
-      {showPlaceholder && <ErrorPlaceholder context={props.context} isReadOnly={props.isReadOnly} error={error} />}
+      {props.webpart.enableBreadcrumb && <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb.current} />}
+      {showPlaceholder && <ErrorPlaceholder context={props.context} isRoot={url === props.webpart.url} isReadOnly={props.isReadOnly} error={error} />}
       <div style={divStyle} ref={ref} />
     </ThemeProvider>
   );

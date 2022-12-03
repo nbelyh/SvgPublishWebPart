@@ -29,7 +29,8 @@
       "properties": {
         "enableLinks": true,
         "enablePan": true,
-        "enableZoom": true
+        "enableZoom": true,
+        "enableBreadcrumb": true
       }
     }
   ]

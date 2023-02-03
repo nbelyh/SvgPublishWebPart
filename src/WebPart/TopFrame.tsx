@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from "./IWebPartProps";
+import { Errors } from './Errors';
+import { ErrorPlaceholder } from './components/ErrorPlaceholder';
+import * as strings from 'WebPartStrings';
 import { Breadcrumb, IBreadcrumbItem, ThemeProvider } from '@fluentui/react';
 import { sp } from '@pnp/sp';
 import { LinkClickedEvent, SvgPublishContext } from 'svgpublish';
-import { Errors } from './Errors';
-import { ErrorPlaceholder } from './components/ErrorPlaceholder';
 import { IDiagramInfo } from 'svgpublish/dist/interfaces/IDiagramInfo';
 
 export function TopFrame(props: {
@@ -14,7 +15,7 @@ export function TopFrame(props: {
   isReadOnly: boolean;
 }) {
 
-  const ref = React.useRef(null);
+  const containerRef = React.useRef(null);
   const [url, setUrl] = React.useState<string>(props.webpart.url);
 
   const contextRef = React.useRef<SvgPublishContext>(null);
@@ -36,6 +37,7 @@ export function TopFrame(props: {
 
     if (!url) return;
 
+    setError('');
     sp.web.getFileByUrl(url).getText().then(async (content) => {
 
       const init: Partial<IDiagramInfo> = {
@@ -44,9 +46,8 @@ export function TopFrame(props: {
         enableLinks: props.webpart.enableLinks
       };
 
-      contextRef.current = new SvgPublishContext(ref.current, content, init);
+      contextRef.current = new SvgPublishContext(containerRef.current, content, init);
       contextRef.current.events.addEventListener('linkClicked', onLinkClicked);
-      setError('');
     }, err => {
       Errors.formatErrorMessage(err)
         .then(message => setError(`Unable to get file ${decodeURI(url)}. ${message}`))
@@ -95,7 +96,7 @@ export function TopFrame(props: {
         }
       }
     }
-  }
+  };
 
   const [error, setError] = React.useState('');
 
@@ -116,8 +117,8 @@ export function TopFrame(props: {
   return (
     <ThemeProvider style={rootStyle}>
       {props.webpart.enableBreadcrumb && <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb.current} />}
-      {showPlaceholder && <ErrorPlaceholder context={props.context} isRoot={url === props.webpart.url} isReadOnly={props.isReadOnly} error={error} />}
-      <div style={divStyle} ref={ref} />
+      {showPlaceholder && <ErrorPlaceholder context={props.context} isReadOnly={props.isReadOnly} error={error} />}
+      <div style={divStyle} ref={containerRef} />
     </ThemeProvider>
   );
 }

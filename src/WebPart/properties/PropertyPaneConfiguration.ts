@@ -17,7 +17,7 @@ export class PropertyPaneConfiguration {
           displayGroupsAsAccordion: true,
           groups: [
             {
-              groupName: "Drawing Display",
+              groupName: strings.PropertyPaneLabelDrawingDisplay, // Drawing Display
               groupFields: [
                 PropertyPaneUrlField('url', {
                   url: properties.url,
@@ -27,12 +27,12 @@ export class PropertyPaneConfiguration {
               ]
             },
             {
-              groupName: "Appearance",
+              groupName: strings.PropertyPaneLabelAppearance,
               isCollapsed: true,
               groupFields: [
                 PropertyPaneSizeField('width', {
                   label: strings.FieldWidth,
-                  description: "Specify width value and units",
+                  description: strings.FieldWidthDescription,
                   value: properties.width,
                   screenUnits: 'w',
                   getDefaultValue: () => Defaults.getDefaultWidth(context)
@@ -40,7 +40,7 @@ export class PropertyPaneConfiguration {
 
                 PropertyPaneSizeField('height', {
                   label: strings.FieldHeight,
-                  description: "Specify height value and units",
+                  description: strings.FieldHeightDescription,
                   value: properties.height,
                   screenUnits: 'h',
                   getDefaultValue: () => Defaults.getDefaultHeight(context)
@@ -48,7 +48,7 @@ export class PropertyPaneConfiguration {
               ]
             },
             {
-              groupName: "Drawing Interactivity",
+              groupName: strings.PropertyPaneLabelInteractivity,
               isCollapsed: true,
               groupFields: [
                 PropertyPaneToggle('enableBreadcrumb', {
@@ -66,7 +66,7 @@ export class PropertyPaneConfiguration {
               ]
             },
             {
-              groupName: "About",
+              groupName: strings.PropertyPaneLabelAbout,
               isCollapsed: true,
               groupFields: [
                 PropertyPaneVersionField(context.manifest.version)

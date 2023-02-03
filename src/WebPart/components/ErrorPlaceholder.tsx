@@ -1,45 +1,44 @@
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { Placeholder } from 'min-sp-controls-react/controls/placeholder'
-import * as React from 'react'
+import * as React from 'react';
+import * as strings from 'WebPartStrings';
+import { Placeholder } from '../../min-sp-controls-react/controls/placeholder';
 
 export const ErrorPlaceholder = (props: {
   context: WebPartContext;
   isReadOnly: boolean;
-  isRoot: boolean;
   error: string;
 }) => {
 
+  const isTeams = !!props.context.sdks?.microsoftTeams?.context;
   const isPropertyPaneOpen = props.context.propertyPane.isPropertyPaneOpen();
   const onConfigure = () => props.context.propertyPane.open();
 
   const placeholderIconName = props.error
-    ? "Error"
-    : "Edit";
+    ? strings.Error
+    : strings.Edit;
 
   const placeholderIconText = props.error
-    ? "Unable to show the diagram"
-    : "The diagram is not selected";
-
-  const isTeams = !!props.context.sdks?.microsoftTeams?.context;
+    ? strings.placeholderIconTextUnableShowVisio
+    : strings.placeholderIconTextVisioNotSelected
 
   const placeholderDescription = isPropertyPaneOpen
-    ? `Click 'Browse...' Button on configuration panel to select the diagram.`
+    ? strings.placeholderIconTextPleaseclickBrowse
     : props.isReadOnly
       ? (isTeams
-        ? `Click 'Settings' menu on the Tab to reconfigure this web part.`
-        : `Click 'Edit' to start page editing to reconfigure this web part.`
+        ? strings.placeholderIconTextPleaseclickSettings
+        : strings.placeholderIconTextPleaseclickEdit
       )
-      : `Click 'Configure' button to reconfigure this web part.`;
+      : strings.placeholderIconTextPleaseclickConfigure
 
   return (
     <Placeholder
       iconName={placeholderIconName}
       iconText={placeholderIconText}
       description={props.error + ' ' + placeholderDescription}
-      buttonLabel={"Configure"}
+      buttonLabel={strings.FieldConfigureLabel}
       onConfigure={onConfigure}
       hideButton={props.isReadOnly}
       disableButton={isPropertyPaneOpen}
     />
   );
-}
+};

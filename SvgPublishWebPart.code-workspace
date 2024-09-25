@@ -7,7 +7,7 @@
       "path": "../SvgPublishLib"
     },
     {
-      "path": "../SvgPublishStorybook"
+      "path": "../SvgPublishReact"
     }
   ],
 	"settings": {

@@ -1,6 +1,6 @@
 import * as strings from 'WebPartStrings';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { IPropertyPaneConfiguration, PropertyPaneToggle } from '@microsoft/sp-property-pane';
+import { IPropertyPaneConfiguration, PropertyPaneDropdown, PropertyPaneToggle } from '@microsoft/sp-property-pane';
 
 import { PropertyPaneVersionField } from './PropertyPaneVersionField';
 import { PropertyPaneUrlField } from './PropertyPaneUrlField';
@@ -60,6 +60,17 @@ export class PropertyPaneConfiguration {
               groupName: "Styling",
               isCollapsed: true,
               groupFields: [
+                PropertyPaneToggle('enableBoxSelection', {
+                  label: "Use box for selection and hover",
+                }),
+                PropertyPaneDropdown('selectionMode', {
+                  label: "Selection Mode",
+                  options: [
+                    { key: 'normal', text: "normal" },
+                    { key: 'lighten', text: "lighten" },
+                    { key: 'darken', text: "darken" },
+                  ],
+                }),
                 PropertyPaneColorField('selectColor', {
                   label: "Selection Color",
                   description: "The color for selection",

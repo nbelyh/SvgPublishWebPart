@@ -30,6 +30,8 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
       enableLinks: this.properties.enableLinks ?? true,
       enableBreadcrumb: this.properties.enableBreadcrumb ?? true,
       enableSelection: this.properties.enableSelection ?? true,
+      enableBoxSelection: this.properties.enableBoxSelection ?? false,
+      selectionMode: this.properties.selectionMode || 'normal',
       enableFollowHyperlinks: this.properties.enableFollowHyperlinks ?? true,
       enableHover: this.properties.enableHover ?? true,
       openHyperlinksInNewWindow: this.properties.openHyperlinksInNewWindow ?? true,

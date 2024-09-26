@@ -78,6 +78,8 @@ export function TopFrame(props: {
       {!!error  && <ErrorPlaceholder error={error} />}
       <SvgPublishComponent
         enableSelection={props.webpart.enableSelection}
+        enableBoxSelection={props.webpart.enableBoxSelection}
+        selectionMode={props.webpart.selectionMode as any}
         enableFollowHyperlinks={props.webpart.enableFollowHyperlinks}
         openHyperlinksInNewWindow={props.webpart.openHyperlinksInNewWindow}
         hyperlinkColor={props.webpart.hyperlinkColor}

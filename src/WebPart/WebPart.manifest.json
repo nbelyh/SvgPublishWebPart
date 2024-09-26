@@ -32,6 +32,8 @@
         "enableZoom": true,
         "enableBreadcrumb": true,
         "enableSelection": true,
+        "enableBoxSelection": false,
+        "selectionMode": "normal",
         "enableFollowHyperlinks": true,
         "openHyperlinksInNewWindow": true,
         "enableHover": true,

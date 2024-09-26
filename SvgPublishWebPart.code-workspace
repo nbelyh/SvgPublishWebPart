@@ -11,6 +11,8 @@
     }
   ],
 	"settings": {
-		"typescript.tsdk": ".\\node_modules\\typescript\\lib"
+    "typescript.tsdk": ".\\node_modules\\typescript\\lib",
+    "liveServer.settings.multiRootWorkspaceName": "SvgPublishReact",
+    "liveServer.settings.root": "../SvgPublishReact/storybook-static"
 	}
 }

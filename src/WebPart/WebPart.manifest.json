@@ -33,6 +33,7 @@
         "enableBreadcrumb": true,
         "enableSelection": true,
         "enableFollowHyperlinks": true,
+        "openHyperlinksInNewWindow": true,
         "enableHover": true
       }
     }

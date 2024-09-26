@@ -72,11 +72,11 @@ export class PropertyPaneConfiguration {
               groupName: "Hyperlinks",
               isCollapsed: true,
               groupFields: [
-                PropertyPaneToggle('enableLinks', {
+                PropertyPaneToggle('enableFollowHyperlinks', {
                   label: "Enable Links",
                 }),
-                PropertyPaneToggle('enableFollowHyperlinks', {
-                  label: "Follow Hyperlinks",
+                PropertyPaneToggle('openHyperlinksInNewWindow', {
+                  label: "Open Hyperlinks in New Window",
                 }),
               ]
             },

@@ -19,8 +19,8 @@ define([], function() {
     messageArePermissionsMissing: "Fehlen Berechtigungen zum Öffnen?",
     messageCannotResolveFileURL: "Kann die Datei URL nicht auflösen:",
     messageSomethingWentWrongResolveURL: "Irgendetwas ist schief gelaufen beim Auflösen der URL:",
-    messageVisioFileCannotAccessed: "Auf die mit diesem Web Part verknüpfte Visio Datei kann nicht zugegriffen werden.",
-    messageVisioFileNotFound: "Die mit diesem Web Part verknüpfte Visio Datei wurde nicht gefunden.",
+    messageVisioFileCannotAccessed: "Auf die mit diesem Web Part verknüpfte SVG Datei kann nicht zugegriffen werden.",
+    messageVisioFileNotFound: "Die mit diesem Web Part verknüpfte SVG Datei wurde nicht gefunden.",
     messageWasTheFileDeleted: "Wurde die Datei gelöscht?",
     millimeters: "Millimeter",
     percOfFrame: "% vom Widgetbereich",
@@ -30,8 +30,8 @@ define([], function() {
     placeholderIconTextPleaseclickConfigure: "Klicke auf die 'Konfigurieren' Schaltfläche um dieses Web Part zu konfigurieren.",
     placeholderIconTextPleaseclickEdit: "Bitte klick 'Editieren' und starte das Bearbeiten der Seite um den Web Part zu konfigurieren.",
     placeholderIconTextPleaseclickSettings: "Bitte klick auf 'Einstellungen' im Tab um dieses Web Part zu konfigurieren.",
-    placeholderIconTextUnableShowVisio: "Kann das Visio Diagramm nicht anzeigen.",
-    placeholderIconTextVisioNotSelected: "Noch kein Visio Diagramm ausgewählt.",
+    placeholderIconTextUnableShowVisio: "Kann die SVG Datei nicht anzeigen.",
+    placeholderIconTextVisioNotSelected: "Noch kein SVG Datei ausgewählt.",
     points: "Punkte",
     PropertyPaneLabelAbout: "Über",
     PropertyPaneLabelAppearance: "Aussehen",
@@ -45,6 +45,6 @@ define([], function() {
     PropertyPaneLabelhideToolbars: "Verstecke Toolbars",
     PropertyPaneLabelInteractivity: "Interaktivität",
     View: "Ansicht",
-    VisioDocument: "Visio Document"
+    VisioDocument: "SVG File"
   };
 });

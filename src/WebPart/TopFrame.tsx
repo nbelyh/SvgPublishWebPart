@@ -5,7 +5,7 @@ import { ErrorPlaceholder } from './components/ErrorPlaceholder';
 import * as strings from 'WebPartStrings';
 import { Breadcrumb, IBreadcrumbItem, ThemeProvider } from '@fluentui/react';
 import { LinkClickedEvent } from 'svgpublish';
-import { SvgPublishComponent } from './components/SvgPublishComponent';
+import { SvgPublishComponent } from 'svgpublish-react';
 
 export function TopFrame(props: {
   context: WebPartContext;
@@ -68,7 +68,10 @@ export function TopFrame(props: {
       {props.webpart.enableBreadcrumb && <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb.current} />}
       {showPlaceholder && <ErrorPlaceholder context={props.context} isReadOnly={props.isReadOnly} error={error} />}
       <SvgPublishComponent
-        url={props.webpart.url}
+        enableSelection
+        enableFollowHyperlinks
+        enableHover
+        url={url}
         width={props.webpart.width}
         height={props.webpart.height}
         enableZoom={props.webpart.enableZoom}

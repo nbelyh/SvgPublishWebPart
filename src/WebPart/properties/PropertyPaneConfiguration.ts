@@ -30,6 +30,9 @@ export class PropertyPaneConfiguration {
               groupName: strings.PropertyPaneLabelAppearance,
               isCollapsed: true,
               groupFields: [
+                PropertyPaneToggle('enableBreadcrumb', {
+                  label: "Enable Breadcrumb",
+                }),
                 PropertyPaneSizeField('width', {
                   label: strings.FieldWidth,
                   description: strings.FieldWidthDescription,
@@ -51,17 +54,20 @@ export class PropertyPaneConfiguration {
               groupName: strings.PropertyPaneLabelInteractivity,
               isCollapsed: true,
               groupFields: [
-                PropertyPaneToggle('enableBreadcrumb', {
-                  label: "Enable Breadcrumb",
-                }),
-                PropertyPaneToggle('enableLinks', {
-                  label: "Enable Links",
-                }),
                 PropertyPaneToggle('enablePan', {
                   label: "Enable Pan",
                 }),
                 PropertyPaneToggle('enableZoom', {
                   label: "Enable Zoom",
+                }),
+              ]
+            },
+            {
+              groupName: "Hyperlinks",
+              isCollapsed: true,
+              groupFields: [
+                PropertyPaneToggle('enableLinks', {
+                  label: "Enable Links",
                 }),
               ]
             },

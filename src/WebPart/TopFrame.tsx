@@ -4,8 +4,7 @@ import { IWebPartProps } from "./IWebPartProps";
 import { ErrorPlaceholder } from './components/ErrorPlaceholder';
 import * as strings from 'WebPartStrings';
 import { Breadcrumb, IBreadcrumbItem, ThemeProvider } from '@fluentui/react';
-import { LinkClickedEvent } from 'svgpublish';
-import { SvgPublishComponent } from 'svgpublish-react';
+import { SvgPublishComponent, LinkClickedEvent } from 'svgpublish-react';
 
 export function TopFrame(props: {
   context: WebPartContext;
@@ -16,13 +15,17 @@ export function TopFrame(props: {
   const [url, setUrl] = React.useState<string>(props.webpart.url);
 
   const onBreadcrumbClick = (ev?: React.MouseEvent<HTMLElement>, item?: IBreadcrumbItem) => {
-    const foundIndex = breadcrumb.current.findIndex(x => x.key === item.key);
-    breadcrumb.current.splice(foundIndex+1);
+    setBreadcrumb(b => b.slice(0, b.findIndex(i => i.key === item.key) + 1));
     setUrl(item.key);
   };
 
-  const breadcrumbDefault = [{ key: props.webpart.url, text: "Home", onClick: onBreadcrumbClick }];
-  const breadcrumb = React.useRef<IBreadcrumbItem[]>(breadcrumbDefault);
+  const [breadcrumb, setBreadcrumb] = React.useState<IBreadcrumbItem[]>(props.webpart.url ? [{ key: props.webpart.url, text: "Home", onClick: onBreadcrumbClick }] : []);
+
+  React.useEffect(() => {
+    setUrl(props.webpart.url);
+    setBreadcrumb([{ key: props.webpart.url, text: "Home", onClick: onBreadcrumbClick }]);
+  }, [props.webpart.url]);
+
 
   const onLinkClicked = (evt: LinkClickedEvent) => {
 
@@ -36,13 +39,13 @@ export function TopFrame(props: {
       const diagram = evt.detail.context.diagram;
       const page = diagram.pages.find(p => p.Id === pageId);
       const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + page.FileName;
-      breadcrumb.current.push({ key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick })
+      setBreadcrumb(b => [...b, { key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick }]);
       setUrl(pageUrl);
     } else {
       if (link.Address) {
         if (!link.Address.startsWith('https:') && link.Address.endsWith('.svg')) { // another local diagram
           const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + link.Address;
-          breadcrumb.current.push({ key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick })
+          setBreadcrumb(b => [...b, { key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick }]);
           setUrl(pageUrl);
         } else {
           window.open(link.Address, '_blank');
@@ -65,7 +68,7 @@ export function TopFrame(props: {
 
   return (
     <ThemeProvider style={rootStyle}>
-      {props.webpart.enableBreadcrumb && <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb.current} />}
+      {props.webpart.enableBreadcrumb && <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb} />}
       {showPlaceholder && <ErrorPlaceholder context={props.context} isReadOnly={props.isReadOnly} error={error} />}
       <SvgPublishComponent
         enableSelection

@@ -33,6 +33,12 @@ export class PropertyPaneConfiguration {
                 PropertyPaneToggle('enableBreadcrumb', {
                   label: "Enable Breadcrumb",
                 }),
+                PropertyPaneToggle('enableHover', {
+                  label: "Enable Hover",
+                }),
+                PropertyPaneToggle('enableSelection', {
+                  label: "Enable Selection",
+                }),
                 PropertyPaneSizeField('width', {
                   label: strings.FieldWidth,
                   description: strings.FieldWidthDescription,
@@ -68,6 +74,9 @@ export class PropertyPaneConfiguration {
               groupFields: [
                 PropertyPaneToggle('enableLinks', {
                   label: "Enable Links",
+                }),
+                PropertyPaneToggle('enableFollowHyperlinks', {
+                  label: "Follow Hyperlinks",
                 }),
               ]
             },

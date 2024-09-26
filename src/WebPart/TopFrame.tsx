@@ -79,6 +79,7 @@ export function TopFrame(props: {
       <SvgPublishComponent
         enableSelection={props.webpart.enableSelection}
         enableFollowHyperlinks={props.webpart.enableFollowHyperlinks}
+        openHyperlinksInNewWindow={props.webpart.openHyperlinksInNewWindow}
         enableHover={props.webpart.enableHover}
         url={url}
         width={props.webpart.width}

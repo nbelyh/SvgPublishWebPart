@@ -12,5 +12,6 @@ export interface IWebPartProps {
   enableBreadcrumb: boolean;
   enableSelection: boolean;
   enableFollowHyperlinks: boolean;
+  openHyperlinksInNewWindow: boolean;
   enableHover: boolean;
 }

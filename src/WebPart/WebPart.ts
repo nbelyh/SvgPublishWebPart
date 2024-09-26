@@ -8,6 +8,7 @@ import { sp } from '@pnp/sp';
 import { TopFrame } from './TopFrame';
 import { PropertyPaneConfiguration } from './properties/PropertyPaneConfiguration';
 import { IWebPartProps } from './IWebPartProps';
+import { Defaults } from './properties/Defaults';
 
 export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
 
@@ -32,6 +33,9 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
       enableFollowHyperlinks: this.properties.enableFollowHyperlinks ?? true,
       enableHover: this.properties.enableHover ?? true,
       openHyperlinksInNewWindow: this.properties.openHyperlinksInNewWindow ?? true,
+      hyperlinkColor: this.properties.hyperlinkColor || Defaults.hyperlinkColor,
+      selectColor: this.properties.selectColor || Defaults.selectColor,
+      hoverColor: this.properties.hoverColor || Defaults.hoverColor,
     };
 
     const element = React.createElement(TopFrame, {

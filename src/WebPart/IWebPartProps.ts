@@ -14,4 +14,7 @@ export interface IWebPartProps {
   enableFollowHyperlinks: boolean;
   openHyperlinksInNewWindow: boolean;
   enableHover: boolean;
+  hyperlinkColor: string;
+  selectColor: string;
+  hoverColor: string;
 }

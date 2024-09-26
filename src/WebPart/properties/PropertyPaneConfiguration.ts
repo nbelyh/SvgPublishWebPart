@@ -7,6 +7,7 @@ import { PropertyPaneUrlField } from './PropertyPaneUrlField';
 import { PropertyPaneSizeField } from './PropertyPaneSizeField';
 import { Defaults } from './Defaults';
 import { IWebPartProps } from 'WebPart/IWebPartProps';
+import { PropertyPaneColorField } from './PropertyPaneColorField';
 
 export class PropertyPaneConfiguration {
 
@@ -46,13 +47,36 @@ export class PropertyPaneConfiguration {
                   screenUnits: 'w',
                   getDefaultValue: () => Defaults.getDefaultWidth(context)
                 }),
-
                 PropertyPaneSizeField('height', {
                   label: strings.FieldHeight,
                   description: strings.FieldHeightDescription,
                   value: properties.height,
                   screenUnits: 'h',
                   getDefaultValue: () => Defaults.getDefaultHeight(context)
+                }),
+              ]
+            },
+            {
+              groupName: "Styling",
+              isCollapsed: true,
+              groupFields: [
+                PropertyPaneColorField('selectColor', {
+                  label: "Selection Color",
+                  description: "The color for selection",
+                  defaultValue: Defaults.selectColor,
+                  value: properties.selectColor,
+                }),
+                PropertyPaneColorField('hoverColor', {
+                  label: "Hover Color",
+                  description: "The color for hover",
+                  defaultValue: Defaults.hoverColor,
+                  value: properties.hoverColor,
+                }),
+                PropertyPaneColorField('hyperlinkColor', {
+                  label: "Hyperlink Color",
+                  description: "The highlight color for hyperlinks",
+                  defaultValue: Defaults.selectColor,
+                  value: properties.hyperlinkColor,
                 }),
               ]
             },

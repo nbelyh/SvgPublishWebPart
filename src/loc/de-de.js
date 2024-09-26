@@ -30,7 +30,7 @@ define([], function() {
     placeholderIconTextPleaseclickConfigure: "Klicke auf die 'Konfigurieren' Schaltfläche um dieses Web Part zu konfigurieren.",
     placeholderIconTextPleaseclickEdit: "Bitte klick 'Editieren' und starte das Bearbeiten der Seite um den Web Part zu konfigurieren.",
     placeholderIconTextPleaseclickSettings: "Bitte klick auf 'Einstellungen' im Tab um dieses Web Part zu konfigurieren.",
-    placeholderIconTextUnableShowVisio: "Kann die SVG Datei nicht anzeigen.",
+    placeholderIconTextUnableShowVisio: "Kann die Datei nicht anzeigen.",
     placeholderIconTextVisioNotSelected: "Noch kein SVG Datei ausgewählt.",
     points: "Punkte",
     PropertyPaneLabelAbout: "Über",

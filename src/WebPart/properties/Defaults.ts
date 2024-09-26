@@ -47,7 +47,8 @@ export class Defaults {
   }
 
   private static defaultWidth;
-  public static async getDefaultWidth(context_: WebPartContext) {
+  public static async getDefaultWidth(context: WebPartContext) {
+    context;
     if (this.defaultWidth) {
       return this.defaultWidth;
     }

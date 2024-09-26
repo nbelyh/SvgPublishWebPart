@@ -30,7 +30,7 @@ define([], function() {
     placeholderIconTextPleaseclickConfigure: "Click 'Configure' button to reconfigure this web part.",
     placeholderIconTextPleaseclickEdit: "Please click 'Edit' to start page editing to reconfigure this web part.",
     placeholderIconTextPleaseclickSettings: "Please click 'Settings' menu on the Tab to reconfigure this web part.",
-    placeholderIconTextUnableShowVisio: "Unable to show this SVG file",
+    placeholderIconTextUnableShowVisio: "Unable to show this file",
     placeholderIconTextVisioNotSelected: "SVG file not selected",
     points: "points",
     PropertyPaneLabelAbout: "About",

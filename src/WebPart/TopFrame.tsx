@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from "./IWebPartProps";
-import { ErrorPlaceholder } from './components/ErrorPlaceholder';
-import * as strings from 'WebPartStrings';
+import { BlankPlaceholder } from './components/BlankPlaceholder';
 import { Breadcrumb, IBreadcrumbItem, ThemeProvider } from '@fluentui/react';
 import { SvgPublishComponent, LinkClickedEvent } from 'svgpublish-react';
+import { stringifyError } from './Errors';
+import { ErrorPlaceholder } from './components/ErrorPlaceholder';
 
 export function TopFrame(props: {
   context: WebPartContext;
@@ -17,6 +18,7 @@ export function TopFrame(props: {
   const onBreadcrumbClick = (ev?: React.MouseEvent<HTMLElement>, item?: IBreadcrumbItem) => {
     setBreadcrumb(b => b.slice(0, b.findIndex(i => i.key === item.key) + 1));
     setUrl(item.key);
+    setError('');
   };
 
   const [breadcrumb, setBreadcrumb] = React.useState<IBreadcrumbItem[]>(props.webpart.url ? [{ key: props.webpart.url, text: "Home", onClick: onBreadcrumbClick }] : []);
@@ -54,9 +56,12 @@ export function TopFrame(props: {
     }
   };
 
-  const [error, setError] = React.useState('');
+  const onError = (err: Error) => {
+    const msg = stringifyError(err);
+    setError(msg);
+  }
 
-  const showPlaceholder = !url || error;
+  const [error, setError] = React.useState('');
 
   const rootStyle: React.CSSProperties = {
     height: props.webpart.height,
@@ -69,7 +74,8 @@ export function TopFrame(props: {
   return (
     <ThemeProvider style={rootStyle}>
       {props.webpart.enableBreadcrumb && <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb} />}
-      {showPlaceholder && <ErrorPlaceholder context={props.context} isReadOnly={props.isReadOnly} error={error} />}
+      {!url  && <BlankPlaceholder context={props.context} isReadOnly={props.isReadOnly} />}
+      {!!error  && <ErrorPlaceholder error={error} />}
       <SvgPublishComponent
         enableSelection
         enableFollowHyperlinks
@@ -81,6 +87,7 @@ export function TopFrame(props: {
         enableLinks={props.webpart.enableLinks}
         enablePan={props.webpart.enablePan}
         onLinkClicked={onLinkClicked}
+        onError={onError}
       />
     </ThemeProvider>
   );

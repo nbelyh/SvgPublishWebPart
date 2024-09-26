@@ -89,7 +89,7 @@ stages:
 
           - task: GitHubRelease@1
             inputs:
-              gitHubConnection: 'nbelyh'
+              gitHubConnection: 'github.com_nbelyh'
               repositoryName: '$(Build.Repository.Name)'
               action: 'edit'
               target: '$(Build.SourceVersion)'

@@ -77,9 +77,9 @@ export function TopFrame(props: {
       {!url  && <BlankPlaceholder context={props.context} isReadOnly={props.isReadOnly} />}
       {!!error  && <ErrorPlaceholder error={error} />}
       <SvgPublishComponent
-        enableSelection
-        enableFollowHyperlinks
-        enableHover
+        enableSelection={props.webpart.enableSelection}
+        enableFollowHyperlinks={props.webpart.enableFollowHyperlinks}
+        enableHover={props.webpart.enableHover}
         url={url}
         width={props.webpart.width}
         height={props.webpart.height}

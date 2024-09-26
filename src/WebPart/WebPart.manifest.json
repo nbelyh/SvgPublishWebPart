@@ -30,7 +30,10 @@
         "enableLinks": true,
         "enablePan": true,
         "enableZoom": true,
-        "enableBreadcrumb": true
+        "enableBreadcrumb": true,
+        "enableSelection": true,
+        "enableFollowHyperlinks": true,
+        "enableHover": true
       }
     }
   ]

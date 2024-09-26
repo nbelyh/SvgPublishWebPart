@@ -10,4 +10,7 @@ export interface IWebPartProps {
   enableZoom: boolean;
 
   enableBreadcrumb: boolean;
+  enableSelection: boolean;
+  enableFollowHyperlinks: boolean;
+  enableHover: boolean;
 }

@@ -1,19 +1,19 @@
-export class Errors {
 
-  public static async formatErrorMessage(e) {
-
-    if (e.isHttpRequestError) {
-
-      // get the response
-      const data = await e.response.json();
-
-      // fetch error code
-      const message = typeof data["odata.error"] === "object" ? data["odata.error"]?.message?.value : `${e}`;
-
-      return message;
+export function stringifyError(err: any) {
+  if (typeof err === 'string')
+    return err;
+  if (typeof err === 'object') {
+    if (typeof err.error === 'object') {
+      return stringifyError(err.error);
+    } else if (typeof err.response === 'object' && typeof err.response.toJSON === 'function') {
+      return stringifyError(err.response.toJSON()?.body);
     } else {
-      return `${e}`;
+      return err?.['odata.error']?.message?.value
+        ?? err.error_description
+        ?? err.error_message
+        ?? err.message
+        ?? err.error
+        ?? JSON.stringify(err);
     }
   }
-
 }

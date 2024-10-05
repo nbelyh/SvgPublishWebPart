@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { DefaultButton, Callout, IContextualMenuProps, Stack, IButtonProps, Icon, ActionButton, Text, Label } from '@fluentui/react';
+import { DefaultButton, Callout, IContextualMenuProps, Stack, IButtonProps, Icon, ActionButton, Text } from '@fluentui/react';
 import { ColorPickerDialog } from './ColorPickerDialog'
-import * as strings from 'WebPartStrings'
 import { PaletteColorPicker } from './PaletteColorPicker';
 import { SwatchPalette } from './SwatchPalette';
 

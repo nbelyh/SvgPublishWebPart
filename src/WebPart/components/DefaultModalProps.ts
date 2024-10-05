@@ -1,5 +1,4 @@
 import { ContextualMenu, IModalProps } from '@fluentui/react';
-import * as strings from 'WebPartStrings';
 
 export const defaultModalProps: IModalProps = {
   isBlocking: true,

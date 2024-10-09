@@ -138,7 +138,7 @@ export class PropertyPaneConfiguration {
                 PropertyPaneColorField('prevConnColor', {
                   disabled: !(properties.enableSelection && properties.enablePrevConnColor),
                   defaultValue: DefaultColors.prevConnColor,
-                  value: properties.prevShapeColor,
+                  value: properties.prevConnColor,
                 }),
 
                 PropertyPaneToggle('enableNextConnColor', {
@@ -149,10 +149,18 @@ export class PropertyPaneConfiguration {
                 PropertyPaneColorField('nextConnColor', {
                   disabled: !(properties.enableSelection && properties.enableNextConnColor),
                   defaultValue: DefaultColors.nextConnColor,
-                  value: properties.prevShapeColor,
+                  value: properties.nextConnColor,
                 }),
 
-
+                PropertyPaneToggle('enableConnDilate', {
+                  label: "Enable Connection Dilate",
+                  inlineLabel: true,
+                  disabled: !properties.enableSelection,
+                }),
+                PropertyPaneNumberField('connDilate', {
+                  disabled: !(properties.enableSelection && properties.enableConnDilate),
+                  value: properties.connDilate,
+                }),
               ]
             },
             {

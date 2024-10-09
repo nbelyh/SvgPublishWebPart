@@ -63,7 +63,7 @@ export function ColorComboBox(props: {
     );
   };
 
-  const toolbarStyles: any = props.isSplit && {
+  const toolbarStyles: any = props.isSplit ? {
     splitButtonMenuButton: {
       border: 0,
       backgroundColor: 'transparent',
@@ -79,7 +79,7 @@ export function ColorComboBox(props: {
       border: 0,
       backgroundColor: 'transparent'
     },
-  };
+  } : {};
 
   return (
     <DefaultButton

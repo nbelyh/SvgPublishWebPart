@@ -27,19 +27,6 @@
       "fullPageAppIconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
       "iconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
       "properties": {
-        "enableLinks": true,
-        "enablePan": true,
-        "enableZoom": true,
-        "enableBreadcrumb": true,
-        "enableSelection": true,
-        "enableBoxSelection": false,
-        "selectionMode": "normal",
-        "enableFollowHyperlinks": true,
-        "openHyperlinksInNewWindow": true,
-        "enableHover": true,
-        "hyperlinkColor": "rgba(0, 0, 255, 0.2)",
-        "selectColor": "rgba(255, 255, 0, 0.8)",
-        "hoverColor": "rgba(255, 255, 0, 0.2)"
       }
     }
   ]

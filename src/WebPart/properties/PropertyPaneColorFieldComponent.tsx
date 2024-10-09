@@ -5,18 +5,20 @@ import { ColorComboBox } from '../components/ColorComboBox';
 export function PropertyPaneColorFieldComponent(props: {
   value: string;
   setValue: (value: string) => void;
-  label: string;
+  label?: string;
+  disabled: boolean;
   defaultValue: string;
   description: string;
 }) {
 
   return (
     <Stack tokens={{ childrenGap: 's2' }}>
-      <Label>{props.label}</Label>
+      {props.label && <Label>{props.label}</Label>}
       <ColorComboBox
         text={props.value}
         buttonColor={props.value}
         defaultColor={props.defaultValue}
+        disabled={props.disabled}
         title={props.label}
         iconName='Color'
         color={props.value}

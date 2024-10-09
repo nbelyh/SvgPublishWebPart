@@ -2,14 +2,13 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { IPropertyPaneField, PropertyPaneFieldType, IPropertyPaneCustomFieldProps } from '@microsoft/sp-property-pane';
 
-import { PropertyPaneColorFieldComponent } from './PropertyPaneColorFieldComponent'
+import { PropertyPaneNumberFieldComponent } from './PropertyPaneNumberFieldComponent';
 
-export function PropertyPaneColorField(targetProperty: string, props: {
-  value: string;
+export function PropertyPaneNumberField(targetProperty: string, props: {
+  value: number;
   label?: string;
   description?: string;
-  disabled: boolean;
-  defaultValue: string;
+  disabled?: boolean;
 }): IPropertyPaneField<IPropertyPaneCustomFieldProps> {
 
   return {
@@ -20,11 +19,9 @@ export function PropertyPaneColorField(targetProperty: string, props: {
 
       onRender: (parent: HTMLElement, context: any, changeCallback: (targetProperty: string, newValue: any) => void) => {
         return ReactDom.render(
-          <PropertyPaneColorFieldComponent
+          <PropertyPaneNumberFieldComponent
             value={props.value}
-            defaultValue={props.defaultValue}
             label={props.label}
-            description={props.description}
             disabled={props.disabled}
             setValue={(val) => changeCallback(targetProperty, val)}
           />, parent);

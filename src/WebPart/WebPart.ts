@@ -8,40 +8,113 @@ import { sp } from '@pnp/sp';
 import { TopFrame } from './TopFrame';
 import { PropertyPaneConfiguration } from './properties/PropertyPaneConfiguration';
 import { IWebPartProps } from './IWebPartProps';
-import { Defaults } from './properties/Defaults';
+import { DefaultColors } from 'svgpublish';
 
 export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
 
   public onInit(): Promise<void> {
 
     return super.onInit().then(() => {
+
+      if (typeof this.properties.width === 'undefined') {
+        this.properties.width = '100%';
+      }
+      if (typeof this.properties.height === 'undefined') {
+        this.properties.height = '50vh';
+      }
+      if (typeof this.properties.url === 'undefined') {
+        this.properties.url = '';
+      }
+      if (typeof this.properties.enablePan === 'undefined') {
+        this.properties.enablePan = true;
+      }
+      if (typeof this.properties.enableZoom === 'undefined') {
+        this.properties.enableZoom = true;
+      }
+      if (typeof this.properties.enableLinks === 'undefined') {
+        this.properties.enableLinks = true;
+      }
+      if (typeof this.properties.enableBreadcrumb === 'undefined') {
+        this.properties.enableBreadcrumb = true;
+      }
+      if (typeof this.properties.enableSelection === 'undefined') {
+        this.properties.enableSelection = true;
+      }
+      if (typeof this.properties.enableBoxSelection === 'undefined') {
+        this.properties.enableBoxSelection = false;
+      }
+      if (typeof this.properties.selectionMode === 'undefined') {
+        this.properties.selectionMode = 'normal';
+      }
+      if (typeof this.properties.enableFollowHyperlinks === 'undefined') {
+        this.properties.enableFollowHyperlinks = true;
+      }
+      if (typeof this.properties.enableHover === 'undefined') {
+        this.properties.enableHover = true;
+      }
+      if (typeof this.properties.openHyperlinksInNewWindow === 'undefined') {
+        this.properties.openHyperlinksInNewWindow = true;
+      }
+      if (typeof this.properties.hyperlinkColor === 'undefined') {
+        this.properties.hyperlinkColor = DefaultColors.hyperlinkColor;
+      }
+      if (typeof this.properties.selectColor === 'undefined') {
+        this.properties.selectColor = DefaultColors.selectionColor;
+      }
+      if (typeof this.properties.hoverColor === 'undefined') {
+        this.properties.hoverColor = DefaultColors.hoverColor;
+      }
+      if (typeof this.properties.dilate === 'undefined') {
+        this.properties.dilate = 4;
+      }
+      if (typeof this.properties.enableDilate === 'undefined') {
+        this.properties.enableDilate = true;
+      }
+      if (typeof this.properties.blur === 'undefined') {
+        this.properties.blur = 4;
+      }
+      if (typeof this.properties.enableBlur === 'undefined') {
+        this.properties.enableBlur = false;
+      }
+      if (typeof this.properties.connDilate === 'undefined') {
+        this.properties.connDilate = 1;
+      }
+      if (typeof this.properties.enableConnDilate === 'undefined') {
+        this.properties.enableConnDilate = false;
+      }
+      if (typeof this.properties.enablePrevShapeColor === 'undefined') {
+        this.properties.enablePrevShapeColor = false;
+      }
+      if (typeof this.properties.enableNextShapeColor === 'undefined') {
+        this.properties.enableNextShapeColor = false;
+      }
+      if (typeof this.properties.enablePrevConnColor === 'undefined') {
+        this.properties.enablePrevConnColor = false;
+      }
+      if (typeof this.properties.enableNextConnColor === 'undefined') {
+        this.properties.enableNextConnColor = false;
+      }
+      if (typeof this.properties.prevShapeColor === 'undefined') {
+        this.properties.prevShapeColor = DefaultColors.prevShapeColor;
+      }
+      if (typeof this.properties.nextShapeColor === 'undefined') {
+        this.properties.nextShapeColor = DefaultColors.nextShapeColor;
+      }
+      if (typeof this.properties.prevConnColor === 'undefined') {
+        this.properties.prevConnColor = DefaultColors.prevConnColor;
+      }
+      if (typeof this.properties.nextConnColor === 'undefined') {
+        this.properties.nextConnColor = DefaultColors.nextConnColor;
+      }
+
       sp.setup({ spfxContext: this.context as any });
     });
   }
 
   public render(): void {
 
-    const webpart = {
-      ...this.properties,
-      width: this.properties.width || '100%',
-      height: this.properties.height || '50vh',
-      enablePan: this.properties.enablePan ?? true,
-      enableZoom: this.properties.enableZoom ?? true,
-      enableLinks: this.properties.enableLinks ?? true,
-      enableBreadcrumb: this.properties.enableBreadcrumb ?? true,
-      enableSelection: this.properties.enableSelection ?? true,
-      enableBoxSelection: this.properties.enableBoxSelection ?? false,
-      selectionMode: this.properties.selectionMode || 'normal',
-      enableFollowHyperlinks: this.properties.enableFollowHyperlinks ?? true,
-      enableHover: this.properties.enableHover ?? true,
-      openHyperlinksInNewWindow: this.properties.openHyperlinksInNewWindow ?? true,
-      hyperlinkColor: this.properties.hyperlinkColor || Defaults.hyperlinkColor,
-      selectColor: this.properties.selectColor || Defaults.selectColor,
-      hoverColor: this.properties.hoverColor || Defaults.hoverColor,
-    };
-
     const element = React.createElement(TopFrame, {
-      webpart,
+      webpart: this.properties,
       isReadOnly: this.displayMode === DisplayMode.Read,
       context: this.context,
     });

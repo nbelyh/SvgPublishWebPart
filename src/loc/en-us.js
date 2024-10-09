@@ -43,7 +43,7 @@ define([], function() {
     PropertyPaneLabelhideBorders: "Hide Borders",
     PropertyPaneLabelhideDiagramBoundary: "Hide Diagram Boundary",
     PropertyPaneLabelhideToolbars: "Hide Toolbars",
-    PropertyPaneLabelInteractivity: "Drawing Interactivity",
+    PropertyPaneLabelInteractivity: "Interactivity",
     View: "View",
     Document: "SVG Document"
   };

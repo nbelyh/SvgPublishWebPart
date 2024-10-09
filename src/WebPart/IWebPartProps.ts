@@ -19,4 +19,23 @@ export interface IWebPartProps {
   hyperlinkColor: string;
   selectColor: string;
   hoverColor: string;
+
+  dilate: number;
+  enableDilate: boolean;
+
+  blur: number;
+  enableBlur: boolean;
+
+  connDilate: number;
+  enableConnDilate: boolean;
+
+  enablePrevShapeColor?: boolean;
+  enableNextShapeColor?: boolean;
+  enablePrevConnColor?: boolean;
+  enableNextConnColor?: boolean;
+  prevShapeColor?: string;
+  nextShapeColor?: string;
+  prevConnColor?: string;
+  nextConnColor?: string;
+
 }

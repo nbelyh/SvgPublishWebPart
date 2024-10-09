@@ -77,6 +77,7 @@ export function TopFrame(props: {
       {!url  && <BlankPlaceholder context={props.context} isReadOnly={props.isReadOnly} />}
       {!!error  && <ErrorPlaceholder error={error} />}
       <SvgPublishComponent
+        url={url}
         enableSelection={props.webpart.enableSelection}
         enableBoxSelection={props.webpart.enableBoxSelection}
         selectionMode={props.webpart.selectionMode as any}
@@ -86,12 +87,26 @@ export function TopFrame(props: {
         selectColor={props.webpart.selectColor}
         hoverColor={props.webpart.hoverColor}
         enableHover={props.webpart.enableHover}
-        url={url}
         width={props.webpart.width}
         height={props.webpart.height}
         enableZoom={props.webpart.enableZoom}
         enableLinks={props.webpart.enableLinks}
         enablePan={props.webpart.enablePan}
+        dilate={props.webpart.dilate}
+        enableDilate={props.webpart.enableDilate}
+        blur={props.webpart.blur}
+        enableBlur={props.webpart.enableBlur}
+        connDilate={props.webpart.connDilate}
+        enableConnDilate={props.webpart.enableConnDilate}
+        enablePrevShapeColor={props.webpart.enablePrevShapeColor}
+        enableNextShapeColor={props.webpart.enableNextShapeColor}
+        enablePrevConnColor={props.webpart.enablePrevConnColor}
+        enableNextConnColor={props.webpart.enableNextConnColor}
+        prevShapeColor={props.webpart.prevShapeColor}
+        nextShapeColor={props.webpart.nextShapeColor}
+        prevConnColor={props.webpart.prevConnColor}
+        nextConnColor={props.webpart.nextConnColor}
+
         onLinkClicked={onLinkClicked}
         onError={onError}
       />

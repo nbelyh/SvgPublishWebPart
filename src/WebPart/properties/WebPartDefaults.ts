@@ -2,11 +2,7 @@ import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IDefaultFolder } from './IDefaultFolder';
 import { sp } from '@pnp/sp';
 
-export class Defaults {
-
-  public static selectColor = 'rgba(255, 255, 0, 0.8)';
-  public static hoverColor = 'rgba(255, 255, 0, 0.2)';
-  public static hyperlinkColor = 'rgba(0, 0, 255, 0.2)';
+export class WebPartDefaults {
 
   private static defaultFolder: IDefaultFolder;
   public static async getDefaultFolder(context: WebPartContext): Promise<IDefaultFolder> {

@@ -6,6 +6,7 @@ import { Breadcrumb, IBreadcrumbItem, ThemeProvider } from '@fluentui/react';
 import { SvgPublishComponent, LinkClickedEvent } from 'svgpublish-react';
 import { stringifyError } from './Errors';
 import { ErrorPlaceholder } from './components/ErrorPlaceholder';
+import { UsageLogService } from './services/UsageLogService';
 
 export function TopFrame(props: {
   context: WebPartContext;
@@ -13,7 +14,12 @@ export function TopFrame(props: {
   isReadOnly: boolean;
 }) {
 
-  const [url, setUrl] = React.useState<string>(props.webpart.url);
+  const [url, _setUrl] = React.useState<string>(props.webpart.url);
+
+  const setUrl = (url: string) => {
+    _setUrl(url);
+    UsageLogService.logUrl(url);
+  }
 
   const onBreadcrumbClick = (ev?: React.MouseEvent<HTMLElement>, item?: IBreadcrumbItem) => {
     setBreadcrumb(b => b.slice(0, b.findIndex(i => i.key === item.key) + 1));
@@ -50,6 +56,7 @@ export function TopFrame(props: {
           setBreadcrumb(b => [...b, { key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick }]);
           setUrl(pageUrl);
         } else {
+          UsageLogService.logUrl(link.Address);
           window.open(link.Address, '_blank');
         }
       }

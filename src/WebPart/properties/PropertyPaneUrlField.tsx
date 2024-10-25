@@ -4,7 +4,7 @@ import { IPropertyPaneField, PropertyPaneFieldType, IPropertyPaneCustomFieldProp
 
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { PropertyPaneUrlFieldComponent } from './PropertyPaneUrlFieldComponent';
-import { IDefaultFolder } from './IDefaultFolder';
+import { IDefaultFolder } from '../services/IDefaultFolder';
 
 export function PropertyPaneUrlField(targetProperty: string, props: {
   url: string;

@@ -6,7 +6,7 @@ import { IPropertyPaneConfiguration } from '@microsoft/sp-property-pane';
 import { sp } from '@pnp/sp';
 
 import { TopFrame } from './TopFrame';
-import { PropertyPaneConfiguration } from './properties/PropertyPaneConfiguration';
+import { Configuration } from './properties/Configuration';
 import { IWebPartProps } from './IWebPartProps';
 import { DefaultColors } from 'svgpublish';
 
@@ -144,6 +144,6 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
-    return PropertyPaneConfiguration.get(this.context, this.properties)
+    return Configuration.get(this.context, this.properties)
   }
 }

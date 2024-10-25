@@ -8,7 +8,7 @@ import '@pnp/sp/lists';
 import '@pnp/sp/files';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { FolderExplorer, IFolder } from '../../min-sp-controls-react/controls/folderExplorer';
-import { IDefaultFolder } from './IDefaultFolder';
+import { IDefaultFolder } from '../services/IDefaultFolder';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { Text } from '@fluentui/react/lib/Text';
 import { mergeStyles } from '@fluentui/react';

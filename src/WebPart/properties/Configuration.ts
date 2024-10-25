@@ -5,13 +5,13 @@ import { IPropertyPaneConfiguration, PropertyPaneDropdown, PropertyPaneTextField
 import { PropertyPaneVersionField } from './PropertyPaneVersionField';
 import { PropertyPaneUrlField } from './PropertyPaneUrlField';
 import { PropertyPaneSizeField } from './PropertyPaneSizeField';
-import { WebPartDefaults } from './WebPartDefaults';
+import { WebPartDefaults } from '../services/WebPartDefaults';
 import { IWebPartProps } from 'WebPart/IWebPartProps';
 import { PropertyPaneColorField } from './PropertyPaneColorField';
 import { DefaultColors } from 'svgpublish';
 import { PropertyPaneNumberField } from './PropertyPaneNumberField';
 
-export class PropertyPaneConfiguration {
+export class Configuration {
 
   public static get(context: WebPartContext, properties: IWebPartProps): IPropertyPaneConfiguration {
     return {

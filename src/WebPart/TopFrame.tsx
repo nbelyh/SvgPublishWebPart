@@ -2,11 +2,12 @@ import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from "./IWebPartProps";
 import { BlankPlaceholder } from './components/BlankPlaceholder';
-import { Breadcrumb, IBreadcrumbItem, ThemeProvider } from '@fluentui/react';
+import { ActionButton, Breadcrumb, DefaultButton, IBreadcrumbItem, IconButton, Link, Stack, ThemeProvider, TooltipHost } from '@fluentui/react';
 import { SvgPublishComponent, LinkClickedEvent } from 'svgpublish-react';
 import { stringifyError } from './Errors';
 import { ErrorPlaceholder } from './components/ErrorPlaceholder';
 import { UsageLogService } from './services/UsageLogService';
+import { HashService } from './services/HashService';
 
 export function TopFrame(props: {
   context: WebPartContext;
@@ -14,7 +15,9 @@ export function TopFrame(props: {
   isReadOnly: boolean;
 }) {
 
-  const [url, _setUrl] = React.useState<string>(props.webpart.url);
+  const hashUrl = HashService.getUrlParameter(window.location.hash, 'svgpublish-url');
+  const defaultUrl = hashUrl || props.webpart.url;
+  const [url, _setUrl] = React.useState<string>(defaultUrl);
 
   const setUrl = (url: string) => {
     _setUrl(url);
@@ -27,13 +30,12 @@ export function TopFrame(props: {
     setError('');
   };
 
-  const [breadcrumb, setBreadcrumb] = React.useState<IBreadcrumbItem[]>(props.webpart.url ? [{ key: props.webpart.url, text: "Home", onClick: onBreadcrumbClick }] : []);
+  const [breadcrumb, setBreadcrumb] = React.useState<IBreadcrumbItem[]>(defaultUrl ? [{ key: defaultUrl, text: "Home", onClick: onBreadcrumbClick }] : []);
 
   React.useEffect(() => {
-    setUrl(props.webpart.url);
-    setBreadcrumb([{ key: props.webpart.url, text: "Home", onClick: onBreadcrumbClick }]);
-  }, [props.webpart.url]);
-
+    setUrl(defaultUrl);
+    setBreadcrumb([{ key: defaultUrl, text: "Home", onClick: onBreadcrumbClick }]);
+  }, [defaultUrl]);
 
   const onLinkClicked = (evt: LinkClickedEvent) => {
 
@@ -78,9 +80,45 @@ export function TopFrame(props: {
     flexDirection: 'column'
   };
 
+  // const pageContext = props.context.pageContext;
+
+  const formattedFeedbackUrl = React.useMemo(() => {
+    const feedbackUrl = props.webpart.feedbackUrl || '';
+    const pageUrl = new URL(window.location.href);
+    pageUrl.hash = `svgpublish-url=${encodeURIComponent(url)}`;
+    const result = feedbackUrl.replace('{{URL}}', pageUrl.toString());
+    return result;
+  }, [props.webpart.feedbackUrl, url]);
+
+  const feedbackButtonText = props.webpart.feedbackButtonText || 'Feedback';
+  const feeedbackButtonTarget = '_blank';
+
+  const [hashLinkTooltip, setHashLinkTooltip] = React.useState('Copy WebPart Link');
+
+  const onCopyHashLink = async () => {
+    await navigator.clipboard.writeText(formattedFeedbackUrl);
+    setHashLinkTooltip('Link copied!');
+    setTimeout(() => setHashLinkTooltip('Copy WebPart Link'), 2000);
+  }
+
   return (
     <ThemeProvider style={rootStyle}>
-      {props.webpart.enableBreadcrumb && <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb} />}
+      {props.webpart.enableHeader &&
+        <Stack horizontal>
+          {props.webpart.enableBreadcrumb &&
+          <Stack.Item grow>
+            <Breadcrumb styles={{ root: { margin: 0 }}} items={breadcrumb} />
+          </Stack.Item>}
+          {props.webpart.enableCopyHashLink && <Stack.Item align='center'>
+            <TooltipHost content={hashLinkTooltip}>
+              <IconButton iconProps={{ iconName: 'PageLink' }} title='Copy WebPart Link' onClick={onCopyHashLink} />
+            </TooltipHost>
+          </Stack.Item>}
+          {props.webpart.enableFeedback && <Stack.Item align='center'>
+            <ActionButton target={feeedbackButtonTarget} href={formattedFeedbackUrl}>{feedbackButtonText}</ActionButton>
+          </Stack.Item>}
+        </Stack>
+      }
       {!url  && <BlankPlaceholder context={props.context} isReadOnly={props.isReadOnly} />}
       {!!error  && <ErrorPlaceholder error={error} />}
       <SvgPublishComponent

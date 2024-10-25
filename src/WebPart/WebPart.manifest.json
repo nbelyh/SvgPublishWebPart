@@ -24,8 +24,8 @@
       "description": {
         "default": "The web part is a specialized widget to display an exported SvgPublish diagram."
       },
-      "fullPageAppIconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
-      "iconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp.svg",
+      "fullPageAppIconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp-01.svg",
+      "iconImageUrl": "https://unmanagedvisio.com/upload/spfx/svgpublishwp-01.svg",
       "properties": {
       }
     }

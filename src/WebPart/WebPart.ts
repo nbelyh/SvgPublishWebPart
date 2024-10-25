@@ -34,8 +34,17 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
       if (typeof this.properties.enableLinks === 'undefined') {
         this.properties.enableLinks = true;
       }
+      if (typeof this.properties.enableHeader === 'undefined') {
+        this.properties.enableHeader = true;
+      }
       if (typeof this.properties.enableBreadcrumb === 'undefined') {
         this.properties.enableBreadcrumb = true;
+      }
+      if (typeof this.properties.enableFeedback === 'undefined') {
+        this.properties.enableFeedback = false;
+      }
+      if (typeof this.properties.feedbackButtonText === 'undefined') {
+        this.properties.feedbackButtonText = 'Feedback';
       }
       if (typeof this.properties.enableSelection === 'undefined') {
         this.properties.enableSelection = true;

@@ -33,10 +33,6 @@ export class PropertyPaneConfiguration {
               groupName: strings.PropertyPaneLabelAppearance,
               isCollapsed: true,
               groupFields: [
-                PropertyPaneToggle('enableBreadcrumb', {
-                  label: "Enable Breadcrumb",
-                  inlineLabel: true,
-                }),
                 PropertyPaneToggle('enablePan', {
                   label: "Enable Pan",
                   inlineLabel: true,
@@ -58,6 +54,43 @@ export class PropertyPaneConfiguration {
                   value: properties.height,
                   screenUnits: 'h',
                   getDefaultValue: () => WebPartDefaults.getDefaultHeight(context)
+                }),
+              ]
+            },
+            {
+              groupName: "Header",
+              isCollapsed: true,
+              groupFields: [
+                PropertyPaneToggle('enableHeader', {
+                  label: "Enable Header",
+                  inlineLabel: true,
+                }),
+                PropertyPaneToggle('enableBreadcrumb', {
+                  label: "Breadcrumb",
+                  disabled: !properties.enableHeader,
+                  inlineLabel: true,
+                }),
+                PropertyPaneToggle('enableCopyHashLink', {
+                  label: "Copy Link Button",
+                  disabled: !properties.enableHeader,
+                  inlineLabel: true,
+                }),
+                PropertyPaneToggle('enableFeedback', {
+                  label: "Feedback Button",
+                  disabled: !properties.enableHeader,
+                  inlineLabel: true,
+                }),
+                PropertyPaneTextField('feedbackButtonText', {
+                  disabled: !properties.enableFeedback || !properties.enableHeader,
+                  label: "Button Text",
+                  placeholder: "Feedback",
+                  description: "Label for the feedback button.",
+                }),
+                PropertyPaneTextField('feedbackUrl', {
+                  disabled: !properties.enableFeedback || !properties.enableHeader,
+                  label: "Feedback URL",
+                  placeholder: "ex: https://some.site/?src={{URL}}",
+                  description: "URL to send feedback to. Use {{URL}} as a placeholder for the current page URL.",
                 }),
               ]
             },

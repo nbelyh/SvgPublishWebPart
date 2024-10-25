@@ -9,7 +9,13 @@ export interface IWebPartProps {
   enablePan: boolean;
   enableZoom: boolean;
 
+  enableHeader: boolean;
   enableBreadcrumb: boolean;
+  enableCopyHashLink: boolean;
+  enableFeedback: boolean;
+  feedbackUrl: string;
+  feedbackButtonText: string;
+
   enableSelection: boolean;
   enableBoxSelection: boolean;
   selectionMode: string;

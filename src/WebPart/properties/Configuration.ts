@@ -228,6 +228,21 @@ export class Configuration {
               ]
             },
             {
+              groupName: "Logging",
+              isCollapsed: true,
+              groupFields: [
+                PropertyPaneToggle('enableUsageLog', {
+                  label: "Enable Usage Logging",
+                }),
+                PropertyPaneTextField('usageLogListTitle', {
+                  value: properties.usageLogListTitle,
+                  disabled: !properties.enableUsageLog,
+                  label: "Usage Log List Title",
+                  placeholder: "ex: UsageLog",
+                }),
+              ]
+            },
+            {
               groupName: strings.PropertyPaneLabelAbout,
               isCollapsed: true,
               groupFields: [

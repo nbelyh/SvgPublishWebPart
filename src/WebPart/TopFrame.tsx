@@ -21,7 +21,9 @@ export function TopFrame(props: {
 
   const setUrl = (url: string) => {
     _setUrl(url);
-    UsageLogService.logUrl(url);
+    if (props.webpart.enableUsageLog) {
+      UsageLogService.logUrl(url, props.webpart.usageLogListTitle);
+    }
   }
 
   const onBreadcrumbClick = (ev?: React.MouseEvent<HTMLElement>, item?: IBreadcrumbItem) => {
@@ -58,7 +60,9 @@ export function TopFrame(props: {
           setBreadcrumb(b => [...b, { key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick }]);
           setUrl(pageUrl);
         } else {
-          UsageLogService.logUrl(link.Address);
+          if (props.webpart.enableUsageLog) {
+            UsageLogService.logUrl(link.Address, props.webpart.usageLogListTitle);
+          }
           window.open(link.Address, '_blank');
         }
       }
@@ -82,13 +86,17 @@ export function TopFrame(props: {
 
   // const pageContext = props.context.pageContext;
 
-  const formattedFeedbackUrl = React.useMemo(() => {
-    const feedbackUrl = props.webpart.feedbackUrl || '';
+  const pageUrl = React.useMemo(() => {
     const pageUrl = new URL(window.location.href);
     pageUrl.hash = `svgpublish-url=${encodeURIComponent(url)}`;
-    const result = feedbackUrl.replace('{{URL}}', pageUrl.toString());
+    return pageUrl.toString();
+  }, [url]);
+
+  const formattedFeedbackUrl = React.useMemo(() => {
+    const feedbackUrl = props.webpart.feedbackUrl || '';
+    const result = feedbackUrl.replace('{{URL}}', pageUrl);
     return result;
-  }, [props.webpart.feedbackUrl, url]);
+  }, [props.webpart.feedbackUrl, pageUrl]);
 
   const feedbackButtonText = props.webpart.feedbackButtonText || 'Feedback';
   const feeedbackButtonTarget = '_blank';
@@ -96,7 +104,7 @@ export function TopFrame(props: {
   const [hashLinkTooltip, setHashLinkTooltip] = React.useState('Copy WebPart Link');
 
   const onCopyHashLink = async () => {
-    await navigator.clipboard.writeText(formattedFeedbackUrl);
+    await navigator.clipboard.writeText(pageUrl);
     setHashLinkTooltip('Link copied!');
     setTimeout(() => setHashLinkTooltip('Copy WebPart Link'), 2000);
   }

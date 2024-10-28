@@ -225,6 +225,9 @@ export class Configuration {
                 PropertyPaneToggle('openHyperlinksInNewWindow', {
                   label: "Open Hyperlinks in New Window",
                 }),
+                PropertyPaneToggle('forceOpeningOfficeFilesOnline', {
+                  label: "Force Open Office Files",
+                }),
               ]
             },
             {

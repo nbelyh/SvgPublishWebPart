@@ -2,12 +2,28 @@ import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IWebPartProps } from "./IWebPartProps";
 import { BlankPlaceholder } from './components/BlankPlaceholder';
-import { ActionButton, Breadcrumb, DefaultButton, IBreadcrumbItem, IconButton, Link, Stack, ThemeProvider, TooltipHost } from '@fluentui/react';
+import { ActionButton, Breadcrumb, IBreadcrumbItem, IconButton, Stack, ThemeProvider, TooltipHost } from '@fluentui/react';
 import { SvgPublishComponent, LinkClickedEvent } from 'svgpublish-react';
 import { stringifyError } from './Errors';
 import { ErrorPlaceholder } from './components/ErrorPlaceholder';
 import { UsageLogService } from './services/UsageLogService';
-import { HashService } from './services/HashService';
+
+const isUrlAbsolute = (url: string) => url.indexOf('://') > 0 || url.indexOf('//') === 0;
+
+const officeExtensions = new Set([
+  'doc', 'docx', 'dot', 'dotx', // Word
+  'xls', 'xlsx', 'xlsm', 'xltx', 'xltm',  // Excel
+  'ppt', 'pptx', 'pps', 'ppsx', 'pot', 'potx', // PowerPoint
+  'pub', // Publisher
+  'vsd', 'vsdx', // Visio
+  'odt', 'ods', 'odp', // OpenDocument Text/Spreadsheet/Presentation
+  'rtf' // Rich Text Format
+]);
+
+const isOfficeFileExtension = (url: string) => {
+  const extension = url.split('.').pop().toLowerCase().split(/#|\?/)[0];
+  return officeExtensions.has(extension);
+}
 
 export function TopFrame(props: {
   context: WebPartContext;
@@ -15,8 +31,9 @@ export function TopFrame(props: {
   isReadOnly: boolean;
 }) {
 
-  const hashUrl = HashService.getUrlParameter(window.location.hash, 'svgpublish-url');
-  const defaultUrl = hashUrl || props.webpart.url;
+  const params = new URLSearchParams(window.location.search);
+  const paramsUrl = params.get('svgpublish-url');
+  const defaultUrl = paramsUrl || props.webpart.url;
   const [url, _setUrl] = React.useState<string>(defaultUrl);
 
   const setUrl = (url: string) => {
@@ -60,10 +77,20 @@ export function TopFrame(props: {
           setBreadcrumb(b => [...b, { key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick }]);
           setUrl(pageUrl);
         } else {
+
+          const fileUrl = isUrlAbsolute(link.Address)
+            ? new URL(link.Address)
+            : new URL(link.Address, url.substring(0, url.lastIndexOf('/') + 1));
+
+          if (props.webpart.forceOpeningOfficeFilesOnline && isOfficeFileExtension(link.Address)) {
+            fileUrl.searchParams.append('web', '1');
+          }
+          const target = props.webpart.openHyperlinksInNewWindow ? '_blank' : '_self';
+          window.open(fileUrl, target);
+
           if (props.webpart.enableUsageLog) {
             UsageLogService.logUrl(link.Address, props.webpart.usageLogListTitle);
           }
-          window.open(link.Address, '_blank');
         }
       }
     }
@@ -88,7 +115,8 @@ export function TopFrame(props: {
 
   const pageUrl = React.useMemo(() => {
     const pageUrl = new URL(window.location.href);
-    pageUrl.hash = `svgpublish-url=${encodeURIComponent(url)}`;
+    pageUrl.searchParams.delete('svgpublish-url');
+    pageUrl.searchParams.append('svgpublish-url', url);
     return pageUrl.toString();
   }, [url]);
 

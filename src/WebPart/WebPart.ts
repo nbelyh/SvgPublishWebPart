@@ -31,6 +31,8 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
     this.setDefault('enableHeader', true);
     this.setDefault('enableBreadcrumb', true);
     this.setDefault('enableUsageLog', false);
+    this.setDefault('enableCopyHashLink', false);
+    this.setDefault('forceOpeningOfficeFilesOnline', true);
     this.setDefault('usageLogListTitle', 'UsageLog');
     this.setDefault('enableFeedback', false);
     this.setDefault('feedbackButtonText', 'Feedback');

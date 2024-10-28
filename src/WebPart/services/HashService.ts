@@ -1,4 +1,3 @@
-import { ISvgPublishContext } from 'svgpublish/dist/interfaces/ISvgPublishContext';
 
 export class HashService {
 

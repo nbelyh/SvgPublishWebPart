@@ -25,6 +25,10 @@ export interface IWebPartProps {
   enableFollowHyperlinks: boolean;
   openHyperlinksInNewWindow: boolean;
   forceOpeningOfficeFilesOnline: boolean;
+
+  rewriteVsdxHyperlinks: boolean;
+  rewriteDocxHyperlinks: boolean;
+
   enableHover: boolean;
   hyperlinkColor: string;
   selectColor: string;

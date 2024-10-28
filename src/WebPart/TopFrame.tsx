@@ -71,26 +71,37 @@ export function TopFrame(props: {
       setBreadcrumb(b => [...b, { key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick }]);
       setUrl(pageUrl);
     } else {
-      if (link.Address) {
-        if (!link.Address.startsWith('https:') && link.Address.endsWith('.svg')) { // another local diagram
-          const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + link.Address;
+
+      let linkAddress = link.Address;
+
+      if (linkAddress) {
+
+        if (props.webpart.rewriteVsdxHyperlinks && linkAddress.endsWith('.vsdx')) {
+          linkAddress = linkAddress.replace('.vsdx', '.svg');
+        }
+        if (props.webpart.rewriteDocxHyperlinks && linkAddress.endsWith('.docx')) {
+          linkAddress = linkAddress.replace('.docx', '.pdf');
+        }
+
+        if (!linkAddress.startsWith('https:') && linkAddress.endsWith('.svg')) { // another local diagram
+          const pageUrl = url.substring(0, url.lastIndexOf('/') + 1) + linkAddress;
           setBreadcrumb(b => [...b, { key: pageUrl, text: args.shape.Text, onClick: onBreadcrumbClick }]);
           setUrl(pageUrl);
         } else {
 
-          const fileUrl = isUrlAbsolute(link.Address)
-            ? new URL(link.Address)
-            : new URL(link.Address, url.substring(0, url.lastIndexOf('/') + 1));
+          if (props.webpart.enableUsageLog) {
+            UsageLogService.logUrl(linkAddress, props.webpart.usageLogListTitle);
+          }
 
-          if (props.webpart.forceOpeningOfficeFilesOnline && isOfficeFileExtension(link.Address)) {
+          const fileUrl = isUrlAbsolute(linkAddress)
+            ? new URL(linkAddress)
+            : new URL(linkAddress, url.substring(0, url.lastIndexOf('/') + 1));
+
+          if (props.webpart.forceOpeningOfficeFilesOnline && isOfficeFileExtension(linkAddress)) {
             fileUrl.searchParams.append('web', '1');
           }
           const target = props.webpart.openHyperlinksInNewWindow ? '_blank' : '_self';
           window.open(fileUrl, target);
-
-          if (props.webpart.enableUsageLog) {
-            UsageLogService.logUrl(link.Address, props.webpart.usageLogListTitle);
-          }
         }
       }
     }

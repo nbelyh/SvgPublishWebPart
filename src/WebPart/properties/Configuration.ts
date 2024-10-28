@@ -140,7 +140,33 @@ export class Configuration {
                   disabled: !(properties.enableSelection && properties.enableBlur),
                   value: properties.blur,
                 }),
-
+              ]
+            },
+            {
+              groupName: "Highlight",
+              isCollapsed: true,
+              groupFields: [
+                PropertyPaneToggle('enableHover', {
+                  label: "Enable Highlight",
+                }),
+                PropertyPaneColorField('hoverColor', {
+                  label: "Hover Color",
+                  disabled: !properties.enableHover,
+                  defaultValue: DefaultColors.hoverColor,
+                  value: properties.hoverColor,
+                }),
+                PropertyPaneColorField('hyperlinkColor', {
+                  label: "Hyperlink Hover Color",
+                  disabled: !properties.enableHover,
+                  defaultValue: DefaultColors.hyperlinkColor,
+                  value: properties.hyperlinkColor,
+                }),
+              ]
+            },
+            {
+              groupName: "Previous/Next Highlight",
+              isCollapsed: true,
+              groupFields: [
                 PropertyPaneToggle('enablePrevShapeColor', {
                   disabled: !properties.enableSelection,
                   inlineLabel: true,
@@ -197,36 +223,28 @@ export class Configuration {
               ]
             },
             {
-              groupName: "Hover",
-              isCollapsed: true,
-              groupFields: [
-                PropertyPaneToggle('enableHover', {
-                  label: "Enable Hover",
-                }),
-                PropertyPaneColorField('hoverColor', {
-                  disabled: !properties.enableHover,
-                  defaultValue: DefaultColors.hoverColor,
-                  value: properties.hoverColor,
-                })
-              ]
-            },
-            {
               groupName: "Hyperlinks",
               isCollapsed: true,
               groupFields: [
                 PropertyPaneToggle('enableFollowHyperlinks', {
                   label: "Enable Links",
-                }),
-                PropertyPaneColorField('hyperlinkColor', {
-                  disabled: !properties.enableFollowHyperlinks,
-                  defaultValue: DefaultColors.hyperlinkColor,
-                  value: properties.hyperlinkColor,
+                  inlineLabel: true,
                 }),
                 PropertyPaneToggle('openHyperlinksInNewWindow', {
                   label: "Open Hyperlinks in New Window",
+                  inlineLabel: true,
                 }),
                 PropertyPaneToggle('forceOpeningOfficeFilesOnline', {
                   label: "Force Open Office Files",
+                  inlineLabel: true,
+                }),
+                PropertyPaneToggle('rewriteVsdxHyperlinks', {
+                  label: "Rewrite VSDX Hyperlinks as SVG",
+                  inlineLabel: true,
+                }),
+                PropertyPaneToggle('rewriteDocxHyperlinks', {
+                  label: "Rewrite DOCX Hyperlinks as PDF",
+                  inlineLabel: true,
                 }),
               ]
             },

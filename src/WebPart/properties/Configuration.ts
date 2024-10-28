@@ -102,10 +102,10 @@ export class Configuration {
                   label: "Enable Selection",
                   inlineLabel: true,
                 }),
-                PropertyPaneColorField('selectColor', {
+                PropertyPaneColorField('selectionColor', {
                   disabled: !properties.enableSelection,
                   defaultValue: DefaultColors.selectionColor,
-                  value: properties.selectColor,
+                  value: properties.selectionColor,
                 }),
                 PropertyPaneToggle('enableBoxSelection', {
                   disabled: !properties.enableSelection,

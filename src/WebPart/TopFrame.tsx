@@ -176,7 +176,7 @@ export function TopFrame(props: {
         enableFollowHyperlinks={props.webpart.enableFollowHyperlinks}
         openHyperlinksInNewWindow={props.webpart.openHyperlinksInNewWindow}
         hyperlinkColor={props.webpart.hyperlinkColor}
-        selectColor={props.webpart.selectColor}
+        selectionColor={props.webpart.selectionColor}
         hoverColor={props.webpart.hoverColor}
         enableHover={props.webpart.enableHover}
         width={props.webpart.width}

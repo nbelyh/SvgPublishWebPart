@@ -31,7 +31,7 @@ export interface IWebPartProps {
 
   enableHover: boolean;
   hyperlinkColor: string;
-  selectColor: string;
+  selectionColor: string;
   hoverColor: string;
 
   dilate: number;

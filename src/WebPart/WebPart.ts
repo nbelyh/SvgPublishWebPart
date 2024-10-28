@@ -45,7 +45,7 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
     this.setDefault('enableHover', true);
     this.setDefault('openHyperlinksInNewWindow', true);
     this.setDefault('hyperlinkColor', DefaultColors.hyperlinkColor);
-    this.setDefault('selectColor', DefaultColors.selectionColor);
+    this.setDefault('selectionColor', DefaultColors.selectionColor);
     this.setDefault('hoverColor', DefaultColors.hoverColor);
     this.setDefault('dilate', 2);
     this.setDefault('enableDilate', true);

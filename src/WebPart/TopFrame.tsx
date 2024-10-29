@@ -199,6 +199,15 @@ export function TopFrame(props: {
         prevConnColor={props.webpart.prevConnColor}
         nextConnColor={props.webpart.nextConnColor}
 
+        enableTooltips={props.webpart.enableTooltips}
+        tooltipTrigger={props.webpart.tooltipTrigger}
+        tooltipDelay={props.webpart.tooltipDelay}
+        tooltipDelayShow={props.webpart.tooltipDelayShow}
+        tooltipDelayHide={props.webpart.tooltipDelayHide}
+        tooltipPlacement={props.webpart.tooltipPlacement}
+        tooltipUseMousePosition={props.webpart.tooltipUseMousePosition}
+        tooltipInteractive={props.webpart.tooltipInteractive}
+
         onLinkClicked={onLinkClicked}
         onError={onError}
       />

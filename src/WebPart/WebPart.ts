@@ -62,6 +62,15 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
     this.setDefault('prevConnColor', DefaultColors.prevConnColor);
     this.setDefault('nextConnColor', DefaultColors.nextConnColor);
 
+    this.setDefault('enableTooltips', false);
+    this.setDefault('tooltipTrigger', 'mouseenter');
+    this.setDefault('tooltipDelay', false);
+    this.setDefault('tooltipDelayShow', 500);
+    this.setDefault('tooltipDelayHide', 0);
+    this.setDefault('tooltipPlacement', 'auto');
+    this.setDefault('tooltipUseMousePosition', false);
+    this.setDefault('tooltipInteractive', false);
+
     sp.setup({ spfxContext: this.context as any });
   }
 

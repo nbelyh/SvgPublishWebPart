@@ -164,7 +164,7 @@ export class Configuration {
               ]
             },
             {
-              groupName: "Previous/Next Highlight",
+              groupName: "Prev/Next Highlight",
               isCollapsed: true,
               groupFields: [
                 PropertyPaneToggle('enablePrevShapeColor', {
@@ -245,6 +245,61 @@ export class Configuration {
                 PropertyPaneToggle('rewriteDocxHyperlinks', {
                   label: "Rewrite DOCX Hyperlinks as PDF",
                   inlineLabel: true,
+                }),
+              ]
+            },
+            {
+              groupName: "Tooltips",
+              isCollapsed: true,
+              groupFields: [
+                PropertyPaneToggle('enableTooltips', {
+                  inlineLabel: true,
+                  label: "Enable Tooltips",
+                }),
+                PropertyPaneToggle('tooltipUseMousePosition', {
+                  label: "Use Mouse Position",
+                  inlineLabel: true,
+                  disabled: !properties.enableTooltips,
+                }),
+                PropertyPaneToggle('tooltipInteractive', {
+                  label: "Interactive (HTML)",
+                  inlineLabel: true,
+                  disabled: !properties.enableTooltips,
+                }),
+                PropertyPaneDropdown('tooltipTrigger', {
+                  label: "Tooltip Trigger",
+                  disabled: !properties.enableTooltips,
+                  options: [
+                    { key: 'mouseenter', text: "mouseenter" },
+                    { key: 'click', text: "click" },
+                    { key: 'mouseenter click', text: "mouseenter click" },
+                  ],
+                }),
+                PropertyPaneDropdown('tooltipPlacement', {
+                  label: "Tooltip Placement",
+                  disabled: !properties.enableTooltips,
+                  options: [
+                    { key: 'auto', text: "auto" },
+                    { key: 'top', text: "top" },
+                    { key: 'bottom', text: "bottom" },
+                    { key: 'left', text: "left" },
+                    { key: 'right', text: "right" },
+                  ],
+                }),
+                PropertyPaneToggle('tooltipDelay', {
+                  label: "Enable Delay",
+                  inlineLabel: true,
+                  disabled: !properties.enableTooltips,
+                }),
+                PropertyPaneNumberField('tooltipDelayShow', {
+                  label: "Show Delay",
+                  disabled: !(properties.enableTooltips && properties.tooltipDelay),
+                  value: properties.tooltipDelayShow,
+                }),
+                PropertyPaneNumberField('tooltipDelayHide', {
+                  label: "Hide Delay",
+                  disabled: !(properties.enableTooltips && properties.tooltipDelay),
+                  value: properties.tooltipDelayHide,
                 }),
               ]
             },

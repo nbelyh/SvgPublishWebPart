@@ -1,5 +1,6 @@
 
 export interface IWebPartProps {
+
   url: string;
 
   width: string;
@@ -52,4 +53,19 @@ export interface IWebPartProps {
   prevConnColor?: string;
   nextConnColor?: string;
 
+  enableTooltips?: boolean;
+  enableTooltipMarkdown?: boolean;
+  tooltipMarkdown?: string;
+
+  tooltipTrigger?: 'mouseenter' | 'click' | 'mouseenter click';
+  tooltipDelay?: boolean;
+  tooltipDelayShow?: number;
+  tooltipDelayHide?: number;
+  tooltipPlacement?: 'auto' | 'auto-start' | 'auto-end' |
+    'top' | 'top-start' | 'top-end' |
+    'right' | 'right-start' | 'right-end' |
+    'bottom' | 'bottom-start' | 'bottom-end' |
+    'left' | 'left-start' | 'left-end';
+  tooltipUseMousePosition?: boolean;
+  tooltipInteractive?: boolean;
 }

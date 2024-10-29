@@ -68,4 +68,5 @@ export interface IWebPartProps {
     'left' | 'left-start' | 'left-end';
   tooltipUseMousePosition?: boolean;
   tooltipInteractive?: boolean;
+  tooltipTheme?: 'dark' | 'light' | 'translucent';
 }

@@ -207,6 +207,7 @@ export function TopFrame(props: {
         tooltipPlacement={props.webpart.tooltipPlacement}
         tooltipUseMousePosition={props.webpart.tooltipUseMousePosition}
         tooltipInteractive={props.webpart.tooltipInteractive}
+        tooltipTheme={props.webpart.tooltipTheme}
 
         onLinkClicked={onLinkClicked}
         onError={onError}

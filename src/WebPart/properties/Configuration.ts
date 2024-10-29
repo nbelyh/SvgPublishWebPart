@@ -262,9 +262,18 @@ export class Configuration {
                   disabled: !properties.enableTooltips,
                 }),
                 PropertyPaneToggle('tooltipInteractive', {
-                  label: "Interactive (HTML)",
+                  label: "Interactive",
                   inlineLabel: true,
                   disabled: !properties.enableTooltips,
+                }),
+                PropertyPaneDropdown('tooltipTheme', {
+                  label: "Tooltip Theme",
+                  disabled: !properties.enableTooltips,
+                  options: [
+                    { key: 'dark', text: "dark" },
+                    { key: 'light', text: "light" },
+                    { key: 'translucent', text: "translucent" },
+                  ],
                 }),
                 PropertyPaneDropdown('tooltipTrigger', {
                   label: "Tooltip Trigger",

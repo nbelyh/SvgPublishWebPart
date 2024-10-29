@@ -70,6 +70,7 @@ export default class WebPart extends BaseClientSideWebPart<IWebPartProps> {
     this.setDefault('tooltipPlacement', 'auto');
     this.setDefault('tooltipUseMousePosition', false);
     this.setDefault('tooltipInteractive', false);
+    this.setDefault('tooltipTheme', 'dark');
 
     sp.setup({ spfxContext: this.context as any });
   }

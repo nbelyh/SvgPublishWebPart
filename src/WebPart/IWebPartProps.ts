@@ -1,3 +1,4 @@
+import { DiagramInfoTooltipPlacement, DiagramInfoTooltipTheme, DiagramInfoTooltipTrigger } from 'svgpublish-react';
 
 export interface IWebPartProps {
 
@@ -57,16 +58,12 @@ export interface IWebPartProps {
   enableTooltipMarkdown?: boolean;
   tooltipMarkdown?: string;
 
-  tooltipTrigger?: 'mouseenter' | 'click' | 'mouseenter click';
+  tooltipTrigger?: DiagramInfoTooltipTrigger;
   tooltipDelay?: boolean;
   tooltipDelayShow?: number;
   tooltipDelayHide?: number;
-  tooltipPlacement?: 'auto' | 'auto-start' | 'auto-end' |
-    'top' | 'top-start' | 'top-end' |
-    'right' | 'right-start' | 'right-end' |
-    'bottom' | 'bottom-start' | 'bottom-end' |
-    'left' | 'left-start' | 'left-end';
+  tooltipPlacement?: DiagramInfoTooltipPlacement;
   tooltipUseMousePosition?: boolean;
   tooltipInteractive?: boolean;
-  tooltipTheme?: 'dark' | 'light' | 'translucent';
+  tooltipTheme?: DiagramInfoTooltipTheme;
 }

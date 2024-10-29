@@ -272,6 +272,7 @@ export class Configuration {
                   options: [
                     { key: 'dark', text: "dark" },
                     { key: 'light', text: "light" },
+                    { key: 'light-border', text: "light-border" },
                     { key: 'translucent', text: "translucent" },
                   ],
                 }),
